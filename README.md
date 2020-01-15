@@ -15,7 +15,7 @@ Edit the appsettings.json file and enter your details as appropriate:
     "TestNet": true,
     "ApiAuthorization": {
         "ApiKey": "kxLuuAAVVcmdcbihm1",
-        "Sign": "Ko9bPRk9y4AVm1rVjpRoEAQeghsecirqL1rk"
+        "Sign": "Ko9bPRk9y4AVm1rVjpRoEAQeghsecirqL1rc"
     }
 }
 ```
