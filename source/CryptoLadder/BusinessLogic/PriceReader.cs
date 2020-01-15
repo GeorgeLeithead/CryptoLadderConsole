@@ -8,7 +8,7 @@ namespace CryptoLadder.BusinessLogic
         public static double Get(bool startingPrice)
         {
             double? matchingPrice = null;
-            string message = startingPrice ? "Please enter a starting price:" : "Please enter a ending price:";
+            string message = startingPrice ? "Please enter a starting price: " : "Please enter a ending price: ";
 
             do
             {

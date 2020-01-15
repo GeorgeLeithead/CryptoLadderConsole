@@ -33,8 +33,10 @@ namespace CryptoLadder.BusinessLogic
                 
                 linearQuantity += (int)quantity;
                 double buyIn = startPrice - (rungs*gaps);
-                
-                linearLadder.Add(new LinearRungs(){ Quantity = (int)quantity, Price = buyIn });
+                if ((int)quantity > 0)
+                {
+                    linearLadder.Add(new LinearRungs(){ Quantity = (int)quantity, Price = buyIn });
+                }
             }
 
             return linearLadder;

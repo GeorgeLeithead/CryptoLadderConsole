@@ -9,17 +9,27 @@ using Microsoft.Extensions.Configuration;
 using System.IO;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace CryptoLadder {
-    class Program {
-        static void Main (string[] args) {
+    internal class Program {
+        static async Task Main (string[] args) {
             IConfigurationBuilder builder = new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
             .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+            .AddJsonFile($"appsettings.development.json", optional: true, reloadOnChange: true)
             .AddEnvironmentVariables();
             IConfigurationRoot configuration = builder.Build();
             ApiAuthorization appAuthorization = new BusinessLogic.ApiAuthorization();
             configuration.GetSection("ApiAuthorization").Bind(appAuthorization);
+            ConsoleColor defaultConsoleForegroundColor = Console.ForegroundColor;
+            if (string.IsNullOrEmpty(appAuthorization.ApiKey)  || string.IsNullOrEmpty(appAuthorization.Sign))
+            {
+                Console.ForegroundColor = ConsoleColor.DarkRed;
+                Console.WriteLine("NO API Key or Secret.  Update appsettings.json with details");
+                Console.ForegroundColor = defaultConsoleForegroundColor;
+                return;
+            }
 
             SymbolEnum symbol = BusinessLogic.SymbolReader.Get();
             double startPrice = BusinessLogic.PriceReader.Get(true);
@@ -33,8 +43,8 @@ namespace CryptoLadder {
             var apiKeyInfo = new KeyInfo();
             try {
                 // Get account api-key information.
-                APIKeyInfo resultKeyInfo = apiKeyInfo.CallApi();
-                Console.WriteLine(resultKeyInfo.ToJson());
+                APIKeyInfo resultKeyInfo = await apiKeyInfo.CallApiAsync();
+                //Console.WriteLine(resultKeyInfo.ToJson());
                 SideEnum orderSide = SideEnum.Buy;
                 if (startPrice < endPrice)
                 {
@@ -42,7 +52,7 @@ namespace CryptoLadder {
                 }
                 double gaps = Ladder.Calculate(startPrice, endPrice, ladderRungs);
                 StringBuilder confirmation = new StringBuilder();
-                confirmation.Append("ORDER DETAILS\n");
+                confirmation.Append("\nORDER DETAILS\n");
                 confirmation.Append("=============\n");
                 confirmation.Append($"Side: {orderSide}\n");
                 confirmation.Append($"Symbol: {symbol}\n");
@@ -64,12 +74,25 @@ namespace CryptoLadder {
                 if (confirm.Key == ConsoleKey.Y)
                 {
                     Console.WriteLine("PLACING ORDER......");
-                    for(int rungs = 0; rungs < linearLadder.Count; rungs++)
+                    foreach (OrderResBase result in from LinearRungs rung in linearLadder
+                                           where rung.Quantity > 0
+                                           let apiOrderCreate = new OrderCreate()
+                                           let result = apiOrderCreate.CallApi(orderSide, symbol, OrderTypeEnum.Limit, TimeInForceEnum.GoodTillCancel, rung.Quantity, rung.Price)
+                                           select result)
                     {
-                        OrderCreate apiOrderCreate = new OrderCreate();
-                        OrderResBase result = apiOrderCreate.CallApi(orderSide, symbol, OrderTypeEnum.Limit, TimeInForceEnum.GoodTillCancel, linearLadder[rungs].Quantity, linearLadder[rungs].Price);
-                        Console.WriteLine(result.ToJson());
-                        Task.Delay(1000).Wait();
+                        if (result.RetCode != 0)
+                        {
+                            Console.ForegroundColor = ConsoleColor.DarkRed;
+                            Console.WriteLine($"Error: {result.RetMsg}");
+                        }
+                        else
+                        {
+                            Console.ForegroundColor = ConsoleColor.DarkGreen;
+                            Console.WriteLine($"Order submitted: {result.Result.Qty} @ {result.Result.Price}");
+                            Task.Delay(1000).Wait();
+                        }
+
+                        Console.ForegroundColor = defaultConsoleForegroundColor;
                     }
 
                     Console.WriteLine("Order(s) Placed!  Good luck!");
@@ -78,7 +101,6 @@ namespace CryptoLadder {
                 {
                     Console.WriteLine("Order canceled! Good luck!");
                 }
-                
 
             } catch (Exception e) {
                 Console.WriteLine ("Exception: " + e.Message);
