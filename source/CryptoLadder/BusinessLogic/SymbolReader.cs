@@ -1,12 +1,14 @@
-using System;
-using System.Globalization;
-using System.Linq;
 using CryptoLadder.Definitions;
+using System;
+using System.Linq;
 
 namespace CryptoLadder.BusinessLogic
 {
+    /// <summary>Read from the console the currency symbol for the order.</summary>
     public static class SymbolReader
     {
+        /// <summary>Get the order currency symbol.</summary>
+        /// <returns>The <see cref="SymbolEnum"/></returns>
         public static SymbolEnum Get()
         {
             SymbolEnum? matchingSymbol = null;

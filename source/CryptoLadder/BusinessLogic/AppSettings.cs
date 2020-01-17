@@ -1,13 +1,11 @@
 namespace CryptoLadder.BusinessLogic
 {
-    public class AppNet
+    /// <summary>Application settings.</summary>
+    public class AppSettings : IAppSettings
     {
-        public bool TestNet { get; set; }
-    }
-
-    public class ApiAuthorization
-    {
+        /// <summary>User identification API key.</summary>
         public string ApiKey { get; set; }
+        /// <summary>User identification signature key.</summary>
         public string Sign { get; set; }
     }
 }
