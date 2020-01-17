@@ -10,6 +10,20 @@
     <Description>Ladder your crypto orders on ByBit</Description>
     <PublishTrimmed>true</PublishTrimmed>
     <PublishReadyToRun>true</PublishReadyToRun>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Copyright>George Leithead (InternetWideWorld.com)</Copyright>
+    <PackageProjectUrl>https://github.com/GeorgeLeithead/CryptoLadderConsole</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/GeorgeLeithead/CryptoLadderConsole</RepositoryUrl>
+    <RepositoryType>GIT</RepositoryType>
+    <PackageTags>ByBit, Crypto, BTC, XRP, ETH, EOS, Ladder, trade, internetwideworld.com, George Leithead</PackageTags>
+    <NeutralLanguage>en-GB</NeutralLanguage>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <Optimize>true</Optimize>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <WarningsAsErrors />
+    <DocumentationFile>C:\Dev\CryptoLadderConsole\source\CryptoLadder\CryptoLadder.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

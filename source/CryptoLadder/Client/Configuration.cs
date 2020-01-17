@@ -5,39 +5,39 @@ using System.IO;
 
 namespace CryptoLadder.Client
 {
-    /// <summary>
-    /// Represents a set of configuration settings
-    /// </summary>
+    /// <summary>Represents a set of configuration settings</summary>
     public class Configuration : IReadableConfiguration
     {
-        #region Constants
-
-        /// <summary>
-        /// Version of the package.
-        /// </summary>
+        /// <summary>Version of the package.</summary>
         /// <value>Version of the package.</value>
         public const string Version = "1.0.0";
 
-        /// <summary>
-        /// Identifier for ISO 8601 DateTime Format
-        /// </summary>
+        /// <summary>Identifier for ISO 8601 DateTime Format</summary>
         /// <remarks>See https://msdn.microsoft.com/en-us/library/az4se3k1(v=vs.110).aspx#Anchor_8 for more information.</remarks>
         // ReSharper disable once InconsistentNaming
         public const string ISO8601_DATETIME_FORMAT = "o";
-
-        #endregion Constants
-
-        #region Static Members
-
         private static readonly object GlobalConfigSync = new { };
         private static Configuration _globalConfiguration;
+
+        /// <summary>Gets or sets the API key based on the authentication name.</summary>
+        /// <value>The API key.</value>
+        private IDictionary<string, string> _apiKey = null;
+
+        /// <summary>Gets or sets the prefix (e.g. Token) of the API key based on the authentication name.</summary>
+        /// <value>The prefix of the API key.</value>
+        private IDictionary<string, string> _apiKeyPrefix = null;
+
+        private string _dateTimeFormat = ISO8601_DATETIME_FORMAT;
+        private string _tempFolderPath = Path.GetTempPath();
+        private ApiClient _apiClient = null;
+        private string _basePath = null;
 
         /// <summary>
         /// Default creation of exceptions for a given method name and response object
         /// </summary>
         public static readonly ExceptionFactory DefaultExceptionFactory = (methodName, response) =>
         {
-            var status = (int)response.StatusCode;
+            int status = (int)response.StatusCode;
             if (status >= 400)
             {
                 return new ApiException(status,
@@ -52,13 +52,11 @@ namespace CryptoLadder.Client
             return null;
         };
 
-        /// <summary>
-        /// Gets or sets the default Configuration.
-        /// </summary>
+        /// <summary>Gets or sets the default Configuration.</summary>
         /// <value>Configuration.</value>
         public static Configuration Default
         {
-            get { return _globalConfiguration; }
+            get => _globalConfiguration;
             set
             {
                 lock (GlobalConfigSync)
@@ -68,37 +66,12 @@ namespace CryptoLadder.Client
             }
         }
 
-        #endregion Static Members
-
-        #region Private Members
-
-        /// <summary>
-        /// Gets or sets the API key based on the authentication name.
-        /// </summary>
-        /// <value>The API key.</value>
-        private IDictionary<string, string> _apiKey = null;
-
-        /// <summary>
-        /// Gets or sets the prefix (e.g. Token) of the API key based on the authentication name.
-        /// </summary>
-        /// <value>The prefix of the API key.</value>
-        private IDictionary<string, string> _apiKeyPrefix = null;
-
-        private string _dateTimeFormat = ISO8601_DATETIME_FORMAT;
-        private string _tempFolderPath = Path.GetTempPath();
-
-        #endregion Private Members
-
-        #region Constructors
-
         static Configuration()
         {
             _globalConfiguration = new GlobalConfiguration();
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Configuration" /> class
-        /// </summary>
+        /// <summary>Initializes a new instance of the <see cref="Configuration" /> class</summary>
         public Configuration()
         {
             UserAgent = "SDKs csharp";
@@ -111,9 +84,7 @@ namespace CryptoLadder.Client
             Timeout = 100000;
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Configuration" /> class
-        /// </summary>
+        /// <summary>Initializes a new instance of the <see cref="Configuration" /> class</summary>
         public Configuration(
             IDictionary<string, string> defaultHeader,
             IDictionary<string, string> apiKey,
@@ -121,56 +92,61 @@ namespace CryptoLadder.Client
             string basePath = "https://api-testnet.bybit.com") : this()
         {
             if (string.IsNullOrWhiteSpace(basePath))
+            {
                 throw new ArgumentException("The provided basePath is invalid.", "basePath");
+            }
+
             if (defaultHeader == null)
+            {
                 throw new ArgumentNullException("defaultHeader");
+            }
+
             if (apiKey == null)
+            {
                 throw new ArgumentNullException("apiKey");
+            }
+
             if (apiKeyPrefix == null)
+            {
                 throw new ArgumentNullException("apiKeyPrefix");
+            }
 
             BasePath = basePath;
 
-            foreach (var keyValuePair in defaultHeader)
+            foreach (KeyValuePair<string, string> keyValuePair in defaultHeader)
             {
                 DefaultHeader.Add(keyValuePair);
             }
 
-            foreach (var keyValuePair in apiKey)
+            foreach (KeyValuePair<string, string> keyValuePair in apiKey)
             {
                 ApiKey.Add(keyValuePair);
             }
 
-            foreach (var keyValuePair in apiKeyPrefix)
+            foreach (KeyValuePair<string, string> keyValuePair in apiKeyPrefix)
             {
                 ApiKeyPrefix.Add(keyValuePair);
             }
         }
 
-        #endregion Constructors
-
-        #region Properties
-
-        private ApiClient _apiClient = null;
-        /// <summary>
-        /// Gets an instance of an ApiClient for this configuration
-        /// </summary>
+        /// <summary>Gets an instance of an ApiClient for this configuration</summary>
         public virtual ApiClient ApiClient
         {
             get
             {
-                if (_apiClient == null) _apiClient = CreateApiClient();
+                if (_apiClient == null)
+                {
+                    _apiClient = CreateApiClient();
+                }
+
                 return _apiClient;
             }
         }
 
-        private String _basePath = null;
-        /// <summary>
-        /// Gets or sets the base path for API access.
-        /// </summary>
+        /// <summary>Gets or sets the base path for API access.</summary>
         public virtual string BasePath
         {
-            get { return _basePath; }
+            get => _basePath;
             set
             {
                 _basePath = value;
@@ -182,68 +158,47 @@ namespace CryptoLadder.Client
             }
         }
 
-        /// <summary>
-        /// Gets or sets the default header.
-        /// </summary>
+        /// <summary>Gets or sets the default header.</summary>
         public virtual IDictionary<string, string> DefaultHeader { get; set; }
 
-        /// <summary>
-        /// Gets or sets the HTTP timeout (milliseconds) of ApiClient. Default to 100000 milliseconds.
-        /// </summary>
+        /// <summary>Gets or sets the HTTP timeout (milliseconds) of ApiClient. Default to 100000 milliseconds.</summary>
         public virtual int Timeout
         {
 
-            get { return ApiClient.RestClient.Timeout; }
-            set { ApiClient.RestClient.Timeout = value; }
+            get => ApiClient.RestClient.Timeout;
+            set => ApiClient.RestClient.Timeout = value;
         }
 
-        /// <summary>
-        /// Gets or sets the HTTP user agent.
-        /// </summary>
-        /// <value>Http user agent.</value>
+        /// <summary>Gets or sets the HTTP user agent.</summary>
+        /// <value>HTTP user agent.</value>
         public virtual string UserAgent { get; set; }
 
-        /// <summary>
-        /// Gets or sets the username (HTTP basic authentication).
-        /// </summary>
-        /// <value>The username.</value>
+        /// <summary>Gets or sets the user name (HTTP basic authentication).</summary>
+        /// <value>The user name.</value>
         public virtual string Username { get; set; }
 
-        /// <summary>
-        /// Gets or sets the password (HTTP basic authentication).
-        /// </summary>
+        /// <summary>Gets or sets the password (HTTP basic authentication).</summary>
         /// <value>The password.</value>
         public virtual string Password { get; set; }
 
-        /// <summary>
-        /// Gets the API key with prefix.
-        /// </summary>
+        /// <summary>Gets the API key with prefix.</summary>
         /// <param name="apiKeyIdentifier">API key identifier (authentication scheme).</param>
         /// <returns>API key with prefix.</returns>
         public string GetApiKeyWithPrefix(string apiKeyIdentifier)
         {
-            var apiKeyValue = "";
-            ApiKey.TryGetValue(apiKeyIdentifier, out apiKeyValue);
-            var apiKeyPrefix = "";
-            if (ApiKeyPrefix.TryGetValue(apiKeyIdentifier, out apiKeyPrefix))
-                return apiKeyPrefix + " " + apiKeyValue;
-            else
-                return apiKeyValue;
+            ApiKey.TryGetValue(apiKeyIdentifier, out string apiKeyValue);
+            return ApiKeyPrefix.TryGetValue(apiKeyIdentifier, out string apiKeyPrefix) ? apiKeyPrefix + " " + apiKeyValue : apiKeyValue;
         }
 
-        /// <summary>
-        /// Gets or sets the access token for OAuth2 authentication.
-        /// </summary>
+        /// <summary>Gets or sets the access token for OAuth2 authentication.</summary>
         /// <value>The access token.</value>
         public virtual string AccessToken { get; set; }
 
-        /// <summary>
-        /// Gets or sets the temporary folder path to store the files downloaded from the server.
-        /// </summary>
+        /// <summary>Gets or sets the temporary folder path to store the files downloaded from the server.</summary>
         /// <value>Folder path.</value>
         public virtual string TempFolderPath
         {
-            get { return _tempFolderPath; }
+            get => _tempFolderPath;
 
             set
             {
@@ -260,19 +215,12 @@ namespace CryptoLadder.Client
                 }
 
                 // check if the path contains directory separator at the end
-                if (value[value.Length - 1] == Path.DirectorySeparatorChar)
-                {
-                    _tempFolderPath = value;
-                }
-                else
-                {
-                    _tempFolderPath = value + Path.DirectorySeparatorChar;
-                }
+                _tempFolderPath = value[^1] == Path.DirectorySeparatorChar ? value : value + Path.DirectorySeparatorChar;
             }
         }
 
         /// <summary>
-        /// Gets or sets the the date time format used when serializing in the ApiClient
+        /// Gets or sets the date time format used when serializing in the ApiClient
         /// By default, it's set to ISO 8601 - "o", for others see:
         /// https://msdn.microsoft.com/en-us/library/az4se3k1(v=vs.110).aspx
         /// and https://msdn.microsoft.com/en-us/library/8kb3ddd4(v=vs.110).aspx
@@ -281,7 +229,7 @@ namespace CryptoLadder.Client
         /// <value>The DateTimeFormat string</value>
         public virtual string DateTimeFormat
         {
-            get { return _dateTimeFormat; }
+            get => _dateTimeFormat;
             set
             {
                 if (string.IsNullOrEmpty(value))
@@ -303,14 +251,10 @@ namespace CryptoLadder.Client
         /// <value>The prefix of the API key.</value>
         public virtual IDictionary<string, string> ApiKeyPrefix
         {
-            get { return _apiKeyPrefix; }
+            get => _apiKeyPrefix;
             set
             {
-                if (value == null)
-                {
-                    throw new InvalidOperationException("ApiKeyPrefix collection may not be null.");
-                }
-                _apiKeyPrefix = value;
+                _apiKeyPrefix = value ?? throw new InvalidOperationException("ApiKeyPrefix collection may not be null.");
             }
         }
 
@@ -320,77 +264,20 @@ namespace CryptoLadder.Client
         /// <value>The API key.</value>
         public virtual IDictionary<string, string> ApiKey
         {
-            get { return _apiKey; }
+            get => _apiKey;
             set
             {
-                if (value == null)
-                {
-                    throw new InvalidOperationException("ApiKey collection may not be null.");
-                }
-                _apiKey = value;
+                _apiKey = value ?? throw new InvalidOperationException("ApiKey collection may not be null.");
             }
-        }
-
-        #endregion Properties
-
-        #region Methods
-
-        /// <summary>
-        /// Add default header.
-        /// </summary>
-        /// <param name="key">Header field name.</param>
-        /// <param name="value">Header field value.</param>
-        /// <returns></returns>
-        public void AddDefaultHeader(string key, string value)
-        {
-            DefaultHeader[key] = value;
         }
 
         /// <summary>
         /// Creates a new <see cref="ApiClient" /> based on this <see cref="Configuration" /> instance.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The <see cref="ApiClient"/> object.</returns>
         public ApiClient CreateApiClient()
         {
             return new ApiClient(BasePath) { Configuration = this };
         }
-
-
-        /// <summary>
-        /// Returns a string with essential information for debugging.
-        /// </summary>
-        public static String ToDebugReport()
-        {
-            String report = "C# SDK Debug Report:\n";
-            report += "    OS: " + System.Environment.OSVersion + "\n";
-            report += "    .NET Framework Version: " + System.Environment.Version + "\n";
-            report += "    Version of the API: 1.0.0\n";
-            report += "    SDK Package Version: 1.0.0\n";
-
-            return report;
-        }
-
-        /// <summary>
-        /// Add Api Key Header.
-        /// </summary>
-        /// <param name="key">Api Key name.</param>
-        /// <param name="value">Api Key value.</param>
-        /// <returns></returns>
-        public void AddApiKey(string key, string value)
-        {
-            ApiKey[key] = value;
-        }
-
-        /// <summary>
-        /// Sets the API key prefix.
-        /// </summary>
-        /// <param name="key">Api Key name.</param>
-        /// <param name="value">Api Key value.</param>
-        public void AddApiKeyPrefix(string key, string value)
-        {
-            ApiKeyPrefix[key] = value;
-        }
-
-        #endregion Methods
     }
 }
