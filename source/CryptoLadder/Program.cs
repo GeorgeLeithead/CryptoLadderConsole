@@ -47,7 +47,8 @@ namespace CryptoLadder
             try
             {
                 // Get account api-key information.
-                APIKeyInfo resultKeyInfo = await apiKeyInfo.CallApiAsync();
+                APIKeyBase resultKeyInfo = await apiKeyInfo.CallApiAsync();
+                Console.WriteLine(resultKeyInfo.ToJson());
                 //Console.WriteLine(resultKeyInfo.ToJson());
                 SideEnum orderSide = SideEnum.Buy;
                 if (startPrice < endPrice)

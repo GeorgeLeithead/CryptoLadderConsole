@@ -189,8 +189,11 @@ namespace CryptoLadder.Api
             }
 
             OrderResBase keyBase = (OrderResBase)Configuration.ApiClient.Deserialize(localVarResponse, typeof(OrderResBase));
-            OrderRes keyResource = keyBase.Result;
-            keyBase.Result = keyResource;
+            if (keyBase.RetCode != 0)
+            {
+                throw new ApiException((int)keyBase.RetCode, keyBase.RetMsg);
+            }
+
             return new ApiResponse<OrderResBase>((int)localVarResponse.StatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
                 keyBase);

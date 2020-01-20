@@ -60,16 +60,16 @@ namespace CryptoLadder.Api
         }
 
         /// <summary>Makes the HTTP request (Sync).</summary>
-        /// <returns><see cref="APIKeyInfo"/> object.</returns>
-        public APIKeyInfo CallApi()
+        /// <returns><see cref="APIKeyBase"/> object.</returns>
+        public APIKeyBase CallApi()
         {
             IRestResponse localVarResponse = CallApi(path, Method.GET, queryParams, formParams, headerParams);
             return ProcessRestResponce(localVarResponse).Data;
         }
 
         /// <summary>Makes the HTTP request (Async).</summary>
-        /// <returns><see cref="APIKeyInfo"/> object.</returns>
-        public async System.Threading.Tasks.Task<APIKeyInfo> CallApiAsync()
+        /// <returns><see cref="APIKeyBase"/> object.</returns>
+        public async System.Threading.Tasks.Task<APIKeyBase> CallApiAsync()
         {
             IRestResponse localVarResponse = await CallApiAsync(path, Method.GET, queryParams, formParams, headerParams);
             return ProcessRestResponce(localVarResponse).Data;
@@ -78,7 +78,7 @@ namespace CryptoLadder.Api
         /// <summary>Process the JSON rest response.</summary>
         /// <param name="localVarResponse">JSON rest response.</param>
         /// <returns><see cref="ApiResponse{T}"/> object.</returns>
-        private ApiResponse<APIKeyInfo> ProcessRestResponce(IRestResponse localVarResponse)
+        private ApiResponse<APIKeyBase> ProcessRestResponce(IRestResponse localVarResponse)
         {
             if (ExceptionFactory != null)
             {
@@ -90,9 +90,14 @@ namespace CryptoLadder.Api
             }
 
             APIKeyBase keyBase = (APIKeyBase)Configuration.ApiClient.Deserialize(localVarResponse, typeof(APIKeyBase));
-            return new ApiResponse<APIKeyInfo>((int)localVarResponse.StatusCode,
+            if (keyBase.RetCode != 0)
+            {
+                throw new ApiException((int)keyBase.RetCode, keyBase.RetMsg);
+            }
+
+            return new ApiResponse<APIKeyBase>((int)localVarResponse.StatusCode,
                 localVarResponse.Headers.ToDictionary(x => x.Name, x => x.Value.ToString()),
-                keyBase.Result[0]);
+                keyBase);
         }
     }
 }

@@ -109,11 +109,11 @@
         </member>
         <member name="M:CryptoLadder.Api.KeyInfo.CallApi">
             <summary>Makes the HTTP request (Sync).</summary>
-            <returns><see cref="T:CryptoLadder.Model.APIKeyInfo"/> object.</returns>
+            <returns><see cref="T:CryptoLadder.Model.APIKeyBase"/> object.</returns>
         </member>
         <member name="M:CryptoLadder.Api.KeyInfo.CallApiAsync">
             <summary>Makes the HTTP request (Async).</summary>
-            <returns><see cref="T:CryptoLadder.Model.APIKeyInfo"/> object.</returns>
+            <returns><see cref="T:CryptoLadder.Model.APIKeyBase"/> object.</returns>
         </member>
         <member name="M:CryptoLadder.Api.KeyInfo.ProcessRestResponce(RestSharp.IRestResponse)">
             <summary>Process the JSON rest response.</summary>
