@@ -28,11 +28,11 @@ namespace CryptoLadder.Tests
             }
 
             KeyInfo apiKeyInfo = new KeyInfo();
-            APIKeyInfo resultKeyInfo = apiKeyInfo.CallApi();
-            Assert.Equal(apiKey, resultKeyInfo.ApiKey, false, false, false);
-            Assert.Equal(userId, resultKeyInfo.UserId);
-            Assert.Equal(readOnly, resultKeyInfo.ReadOnly);
-            Assert.Equal(note, resultKeyInfo.Note, false, false, false);
+            APIKeyBase resultKeyInfo = apiKeyInfo.CallApi();
+            Assert.Equal(apiKey, resultKeyInfo.Result[0].ApiKey, false, false, false);
+            Assert.Equal(userId, resultKeyInfo.Result[0].UserId);
+            Assert.Equal(readOnly, resultKeyInfo.Result[0].ReadOnly);
+            Assert.Equal(note, resultKeyInfo.Result[0].Note, false, false, false);
         }
 
         [Fact]
@@ -49,11 +49,11 @@ namespace CryptoLadder.Tests
             }
 
             KeyInfo apiKeyInfo = new KeyInfo();
-            APIKeyInfo resultKeyInfo = await apiKeyInfo.CallApiAsync();
-            Assert.Equal(apiKey, resultKeyInfo.ApiKey, false, false, false);
-            Assert.Equal(userId, resultKeyInfo.UserId);
-            Assert.Equal(readOnly, resultKeyInfo.ReadOnly);
-            Assert.Equal(note, resultKeyInfo.Note, false, false, false);
+            APIKeyBase resultKeyInfo = await apiKeyInfo.CallApiAsync();
+            Assert.Equal(apiKey, resultKeyInfo.Result[0].ApiKey, false, false, false);
+            Assert.Equal(userId, resultKeyInfo.Result[0].UserId);
+            Assert.Equal(readOnly, resultKeyInfo.Result[0].ReadOnly);
+            Assert.Equal(note, resultKeyInfo.Result[0].Note, false, false, false);
         }
     }
 }
