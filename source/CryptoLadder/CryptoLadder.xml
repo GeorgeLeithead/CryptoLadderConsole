@@ -181,6 +181,9 @@
             <param name="localVarResponse">JSON rest response.</param>
             <returns><see cref="T:CryptoLadder.Client.ApiResponse`1"/> object.</returns>
         </member>
+        <member name="T:CryptoLadder.BuildDependencyInjector">
+            <summary>Dependency injector container.</summary>
+        </member>
         <member name="T:CryptoLadder.BusinessLogic.AppNet">
             <summary>Application network.</summary>
         </member>
@@ -1250,6 +1253,15 @@
             </summary>
             <param name="validationContext">Validation context</param>
             <returns>Validation Result</returns>
+        </member>
+        <member name="T:CryptoLadder.Startup">
+            <summary>CryptoLadder startup runner class.</summary>
+        </member>
+        <member name="M:CryptoLadder.Startup.#ctor(Microsoft.Extensions.Logging.ILogger{CryptoLadder.Startup})">
+            <summary>CryptoLadder Startup constructor</summary>
+        </member>
+        <member name="M:CryptoLadder.Startup.CreateLadder(System.String,System.String)">
+            <summary>Create a crypto ladder.</summary>
         </member>
     </members>
 </doc>
