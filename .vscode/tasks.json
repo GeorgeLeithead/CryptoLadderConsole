@@ -26,6 +26,22 @@
             "problemMatcher": "$msCompile"
         },
         {
+            "label": "publishRelease",
+            "command": "dotnet",
+            "type": "process",
+            "problemMatcher": "$msCompile",
+            "args": [
+                "publish",
+                "${workspaceFolder}/source/CryptoLadder/CryptoLadder.csproj",
+                "-c", "Release",
+                "-r", "win-x64",
+                "-o", "${workspaceFolder}/Deployment/CryptoLadder",
+                "/property:GenerateFullPaths=true",
+                "/property:PublishSingleFile=true",
+                "/consoleloggerparameters:NoSummary"
+            ]
+        },
+        {
             "label": "watch",
             "command": "dotnet",
             "type": "process",
