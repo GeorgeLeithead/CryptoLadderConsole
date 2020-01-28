@@ -10,24 +10,30 @@ namespace CryptoLadder.BusinessLogic
         /// <returns>The number of ladder rungs.</returns>
         public static int Get()
         {
-            int? matchingRungs = null;
-
             do
             {
                 Console.Write("Please enter the number of rungs (> 2 and < 100): ");
                 string read = Console.ReadLine();
-                try
+                if (!IsRungsValid(read))
                 {
-                    matchingRungs = int.Parse(read, CultureInfo.InvariantCulture);
-                    if (matchingRungs < 3 || matchingRungs > 99)
-                    {
-                        matchingRungs = null;
-                    }
+                    continue;
                 }
-                catch { }
-            } while (matchingRungs == null);
 
-            return (int)matchingRungs;
+                return int.Parse(read, CultureInfo.InvariantCulture);
+            } while (true);
+        }
+
+        /// <summary>Validate that the read rungs is valid.</summary>
+        public static bool IsRungsValid(string rungs)
+        {
+            int result;
+            bool IsInt = int.TryParse(rungs, out result);
+            if (!IsInt)
+            {
+                return false;
+            }
+
+            return (result < 3 || result > 99) ? false : true;
         }
     }
 }

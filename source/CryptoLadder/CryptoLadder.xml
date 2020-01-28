@@ -184,30 +184,6 @@
         <member name="T:CryptoLadder.BuildDependencyInjector">
             <summary>Dependency injector container.</summary>
         </member>
-        <member name="T:CryptoLadder.BusinessLogic.AppNet">
-            <summary>Application network.</summary>
-        </member>
-        <member name="P:CryptoLadder.BusinessLogic.AppNet.TestNet">
-            <summary>Use the Test-net network.</summary>
-        </member>
-        <member name="T:CryptoLadder.BusinessLogic.AppSettings">
-            <summary>Application settings.</summary>
-        </member>
-        <member name="P:CryptoLadder.BusinessLogic.AppSettings.ApiKey">
-            <summary>User identification API key.</summary>
-        </member>
-        <member name="P:CryptoLadder.BusinessLogic.AppSettings.Sign">
-            <summary>User identification signature key.</summary>
-        </member>
-        <member name="T:CryptoLadder.BusinessLogic.IAppSettings">
-            <summary>Application settings interface.</summary>
-        </member>
-        <member name="P:CryptoLadder.BusinessLogic.IAppSettings.ApiKey">
-            <summary>User identification API key.</summary>
-        </member>
-        <member name="P:CryptoLadder.BusinessLogic.IAppSettings.Sign">
-            <summary>User identification signature key.</summary>
-        </member>
         <member name="T:CryptoLadder.BusinessLogic.Ladder">
             <summary>Laddering business logic.</summary>
         </member>
@@ -233,6 +209,9 @@
             <param name="startingPrice"></param>
             <returns>The price.</returns>
         </member>
+        <member name="M:CryptoLadder.BusinessLogic.PriceReader.IsPriceValid(System.String)">
+            <summary>Validate that the read price is valid</summary>
+        </member>
         <member name="T:CryptoLadder.BusinessLogic.QuantityReader">
             <summary>Read from the console the quantity for the ladder.</summary>
         </member>
@@ -241,6 +220,9 @@
             <param name="rungs">The number of rungs in the ladder.</param>
             <returns>Order quantity.</returns>
         </member>
+        <member name="M:CryptoLadder.BusinessLogic.QuantityReader.IsQuantityValid(System.String,System.Int32)">
+            <summary>Validate that the read quantity is valid.</summary>
+        </member>
         <member name="T:CryptoLadder.BusinessLogic.RungsReader">
             <summary>Read from the console the number of rungs in the order ladder.</summary>
         </member>
@@ -248,12 +230,18 @@
             <summary>Get the number of rungs.</summary>
             <returns>The number of ladder rungs.</returns>
         </member>
+        <member name="M:CryptoLadder.BusinessLogic.RungsReader.IsRungsValid(System.String)">
+            <summary>Validate that the read rungs is valid.</summary>
+        </member>
         <member name="T:CryptoLadder.BusinessLogic.SymbolReader">
             <summary>Read from the console the currency symbol for the order.</summary>
         </member>
         <member name="M:CryptoLadder.BusinessLogic.SymbolReader.Get">
             <summary>Get the order currency symbol.</summary>
             <returns>The <see cref="T:CryptoLadder.Definitions.SymbolEnum"/></returns>
+        </member>
+        <member name="M:CryptoLadder.BusinessLogic.SymbolReader.IsSymbolValid(System.String)">
+            <summary>Validate that the read currency symbol is valid.</summary>
         </member>
         <member name="T:CryptoLadder.Client.ApiClient">
             <summary>API client is mainly responsible for making the HTTP call to the API back-end.</summary>
@@ -986,6 +974,30 @@
             </summary>
             <param name="validationContext">Validation context</param>
             <returns>Validation Result</returns>
+        </member>
+        <member name="T:CryptoLadder.Model.AppNet">
+            <summary>Application network model.</summary>
+        </member>
+        <member name="P:CryptoLadder.Model.AppNet.TestNet">
+            <summary>Use the Test-net network.</summary>
+        </member>
+        <member name="T:CryptoLadder.Model.AppSettings">
+            <summary>Application settings model.</summary>
+        </member>
+        <member name="P:CryptoLadder.Model.AppSettings.ApiKey">
+            <summary>User identification API key.</summary>
+        </member>
+        <member name="P:CryptoLadder.Model.AppSettings.Sign">
+            <summary>User identification signature key.</summary>
+        </member>
+        <member name="T:CryptoLadder.Model.IAppSettings">
+            <summary>Application settings model interface.</summary>
+        </member>
+        <member name="P:CryptoLadder.Model.IAppSettings.ApiKey">
+            <summary>User identification API key.</summary>
+        </member>
+        <member name="P:CryptoLadder.Model.IAppSettings.Sign">
+            <summary>User identification signature key.</summary>
         </member>
         <member name="T:CryptoLadder.Model.LinearRungs">
             <summary>Linear ladder order rungs.</summary>
