@@ -16,6 +16,7 @@
     <RepositoryType>GIT</RepositoryType>
     <PackageTags>ByBit, Crypto, BTC, XRP, ETH, EOS, Ladder, trade, internetwideworld.com, George Leithead</PackageTags>
     <NeutralLanguage>en-GB</NeutralLanguage>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

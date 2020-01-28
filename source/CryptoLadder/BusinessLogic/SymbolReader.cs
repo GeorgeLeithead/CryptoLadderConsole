@@ -11,16 +11,23 @@ namespace CryptoLadder.BusinessLogic
         /// <returns>The <see cref="SymbolEnum"/></returns>
         public static SymbolEnum Get()
         {
-            SymbolEnum? matchingSymbol = null;
-
             do
             {
                 Console.Write("Please enter a symbol (BTC, ETH, EOS, XRP): ");
                 string read = Console.ReadLine().ToUpperInvariant();
-                matchingSymbol = Enum.GetValues(typeof(SymbolEnum)).Cast<SymbolEnum?>().FirstOrDefault(a => a.ToString().StartsWith(read));
-            } while (matchingSymbol == null);
+                if (!IsSymbolValid(read))
+                {
+                    continue;
+                }
 
-            return (SymbolEnum)matchingSymbol;
+                return Enum.GetValues(typeof(SymbolEnum)).Cast<SymbolEnum>().First(a => a.ToString().StartsWith(read));
+            } while (true);
+        }
+
+        /// <summary>Validate that the read currency symbol is valid.</summary>
+        public static bool IsSymbolValid(string symbol)
+        {
+            return null == Enum.GetValues(typeof(CurrencyEnum)).Cast<CurrencyEnum?>().FirstOrDefault(c => c.ToString().ToUpperInvariant() == symbol.ToUpperInvariant()) ? false : true;
         }
     }
 }

@@ -1,6 +1,6 @@
-namespace CryptoLadder.BusinessLogic
+namespace CryptoLadder.Model
 {
-    /// <summary>Application settings.</summary>
+    /// <summary>Application settings model.</summary>
     public class AppSettings : IAppSettings
     {
         /// <summary>User identification API key.</summary>

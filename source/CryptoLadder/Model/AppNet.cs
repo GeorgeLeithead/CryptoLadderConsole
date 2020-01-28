@@ -1,6 +1,6 @@
-﻿namespace CryptoLadder.BusinessLogic
+﻿namespace CryptoLadder.Model
 {
-    /// <summary>Application network.</summary>
+    /// <summary>Application network model.</summary>
     public class AppNet
     {
         /// <summary>Use the Test-net network.</summary>
