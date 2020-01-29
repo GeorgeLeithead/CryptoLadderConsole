@@ -1,0 +1,624 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>CryptoLadder</name>
+    </assembly>
+    <members>
+        <member name="T:InternetWideWorld.CryptoLadder.ConsoleApp.Api.BaseApi">
+            <summary>Base API class</summary>
+        </member>
+        <member name="F:InternetWideWorld.CryptoLadder.ConsoleApp.Api.BaseApi._exceptionFactory">
+            <summary>Exception factory</summary>
+        </member>
+        <member name="F:InternetWideWorld.CryptoLadder.ConsoleApp.Api.BaseApi.localVarFileParams">
+            <summary>Local file parameters.</summary>
+        </member>
+        <member name="F:InternetWideWorld.CryptoLadder.ConsoleApp.Api.BaseApi.localVarPathParams">
+            <summary>Local path parameters.</summary>
+        </member>
+        <member name="F:InternetWideWorld.CryptoLadder.ConsoleApp.Api.BaseApi.localVarHttpContentType">
+            <summary>The Content-Type header</summary>
+        </member>
+        <member name="M:InternetWideWorld.CryptoLadder.ConsoleApp.Api.BaseApi.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:InternetWideWorld.CryptoLadder.ConsoleApp.Api.BaseApi"/> class.
+            </summary>
+        </member>
+        <member name="M:InternetWideWorld.CryptoLadder.ConsoleApp.Api.BaseApi.#ctor(InternetWideWorld.CryptoLadder.ConsoleApp.Client.Configuration)">
+            <summary>Initializes a new instance of the <see cref="T:InternetWideWorld.CryptoLadder.ConsoleApp.Api.BaseApi"/> class using Configuration object</summary>
+            <param name="configuration">An instance of Configuration</param>
+        </member>
+        <member name="M:InternetWideWorld.CryptoLadder.ConsoleApp.Api.BaseApi.GetBasePath">
+            <summary>Gets the base path of the API client.</summary>
+            <value>The base path</value>
+        </member>
+        <member name="P:InternetWideWorld.CryptoLadder.ConsoleApp.Api.BaseApi.Configuration">
+            <summary>Gets or sets the configuration object</summary>
+            <value>An instance of the Configuration</value>
+        </member>
+        <member name="P:InternetWideWorld.CryptoLadder.ConsoleApp.Api.BaseApi.ExceptionFactory">
+            <summary>Provides a factory method hook for the creation of exceptions.</summary>
+        </member>
+        <member name="M:InternetWideWorld.CryptoLadder.ConsoleApp.Api.BaseApi.CallApi(System.String,RestSharp.Method,System.Collections.Generic.List{System.Collections.Generic.KeyValuePair{System.String,System.String}},System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>Makes the HTTP request (Sync).</summary>
+            <param name="path">URL path.</param>
+            <param name="method">HTTP method.</param>
+            <param name="queryParams">Query parameters.</param>
+            <param name="formParams">Form parameters.</param>
+            <param name="headerParams">Header parameters.</param>
+            <returns>IRestResponse object</returns>
+        </member>
+        <member name="M:InternetWideWorld.CryptoLadder.ConsoleApp.Api.BaseApi.CallApiAsync(System.String,RestSharp.Method,System.Collections.Generic.List{System.Collections.Generic.KeyValuePair{System.String,System.String}},System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>Makes the asynchronous HTTP request.</summary>
+            <param name="path">URL path.</param>
+            <param name="method">HTTP method.</param>
+            <param name="queryParams">Query parameters.</param>
+            <param name="formParams">Form parameters.</param>
+            <param name="headerParams">Header parameters.</param>
+            <returns>The Task instance IRestResponse object</returns>
+        </member>
+        <member name="T:InternetWideWorld.CryptoLadder.ConsoleApp.Api.Interfaces.IApiAccessor">
+            <summary>Represents configuration aspects required to interact with the API endpoints.</summary>
+        </member>
+        <member name="P:InternetWideWorld.CryptoLadder.ConsoleApp.Api.Interfaces.IApiAccessor.Configuration">
+            <summary>Gets or sets the configuration object.</summary>
+            <value>An instance of the Configuration</value>
+        </member>
+        <member name="M:InternetWideWorld.CryptoLadder.ConsoleApp.Api.Interfaces.IApiAccessor.GetBasePath">
+            <summary>Gets the base path of the API client.</summary>
+            <value>The base path</value>
+        </member>
+        <member name="P:InternetWideWorld.CryptoLadder.ConsoleApp.Api.Interfaces.IApiAccessor.ExceptionFactory">
+            <summary>Provides a factory method hook for the creation of exceptions.</summary>
+        </member>
+        <member name="T:InternetWideWorld.CryptoLadder.ConsoleApp.Api.Interfaces.IBaseApi">
+            <summary>Base API class</summary>
+        </member>
+        <member name="P:InternetWideWorld.CryptoLadder.ConsoleApp.Api.Interfaces.IBaseApi.Configuration">
+            <summary>Gets or sets the configuration object.</summary>
+            <value>An instance of the Configuration</value>
+        </member>
+        <member name="P:InternetWideWorld.CryptoLadder.ConsoleApp.Api.Interfaces.IBaseApi.ExceptionFactory">
+            <summary>Provides a factory method hook for the creation of exceptions.</summary>
+        </member>
+        <member name="M:InternetWideWorld.CryptoLadder.ConsoleApp.Api.Interfaces.IBaseApi.GetBasePath">
+            <summary>Gets the base path of the API client.</summary>
+            <value>The base path</value>
+        </member>
+        <member name="T:InternetWideWorld.CryptoLadder.ConsoleApp.Api.KeyInfo">
+            <summary>Get user API key information class.</summary>
+        </member>
+        <member name="F:InternetWideWorld.CryptoLadder.ConsoleApp.Api.KeyInfo.path">
+            <summary>API path</summary>
+        </member>
+        <member name="F:InternetWideWorld.CryptoLadder.ConsoleApp.Api.KeyInfo.queryParams">
+            <summary>API query parameters.</summary>
+        </member>
+        <member name="F:InternetWideWorld.CryptoLadder.ConsoleApp.Api.KeyInfo.headerParams">
+            <summary>The Accept header</summary>
+        </member>
+        <member name="M:InternetWideWorld.CryptoLadder.ConsoleApp.Api.KeyInfo.#ctor(System.String)">
+            <summary>Initializes a new instance of the <see cref="T:InternetWideWorld.CryptoLadder.ConsoleApp.Api.KeyInfo"/> class.</summary>
+        </member>
+        <member name="M:InternetWideWorld.CryptoLadder.ConsoleApp.Api.KeyInfo.#ctor(InternetWideWorld.CryptoLadder.ConsoleApp.Client.Configuration)">
+            <summary>Initializes a new instance of the <see cref="T:InternetWideWorld.CryptoLadder.ConsoleApp.Api.KeyInfo"/> class using Configuration object.</summary>
+            <param name="configuration">An instance of Configuration</param>
+        </member>
+        <member name="M:InternetWideWorld.CryptoLadder.ConsoleApp.Api.KeyInfo.ApiConfiguration">
+            <summary>Configure the API parameters.</summary>
+        </member>
+        <member name="M:InternetWideWorld.CryptoLadder.ConsoleApp.Api.KeyInfo.CallApi">
+            <summary>Makes the HTTP request (Sync).</summary>
+            <returns><see cref="T:InternetWideWorld.CryptoLadder.Shared.Model.APIKeyBase"/> object.</returns>
+        </member>
+        <member name="M:InternetWideWorld.CryptoLadder.ConsoleApp.Api.KeyInfo.CallApiAsync">
+            <summary>Makes the HTTP request (Async).</summary>
+            <returns><see cref="T:InternetWideWorld.CryptoLadder.Shared.Model.APIKeyBase"/> object.</returns>
+        </member>
+        <member name="M:InternetWideWorld.CryptoLadder.ConsoleApp.Api.KeyInfo.ProcessRestResponce(RestSharp.IRestResponse)">
+            <summary>Process the JSON rest response.</summary>
+            <param name="localVarResponse">JSON rest response.</param>
+            <returns><see cref="T:InternetWideWorld.CryptoLadder.ConsoleApp.Client.ApiResponse`1"/> object.</returns>
+        </member>
+        <member name="T:InternetWideWorld.CryptoLadder.ConsoleApp.Api.OrderCreate">
+            <summary>Create active order class.</summary>
+        </member>
+        <member name="F:InternetWideWorld.CryptoLadder.ConsoleApp.Api.OrderCreate.path">
+            <summary>API path</summary>
+        </member>
+        <member name="F:InternetWideWorld.CryptoLadder.ConsoleApp.Api.OrderCreate.queryParams">
+            <summary>API query parameters.</summary>
+        </member>
+        <member name="F:InternetWideWorld.CryptoLadder.ConsoleApp.Api.OrderCreate.headerParams">
+            <summary>The Accept header</summary>
+        </member>
+        <member name="M:InternetWideWorld.CryptoLadder.ConsoleApp.Api.OrderCreate.#ctor(System.String)">
+            <summary>Initializes a new instance of the <see cref="T:InternetWideWorld.CryptoLadder.ConsoleApp.Api.OrderCreate"/> class.</summary>
+        </member>
+        <member name="M:InternetWideWorld.CryptoLadder.ConsoleApp.Api.OrderCreate.#ctor(InternetWideWorld.CryptoLadder.ConsoleApp.Client.Configuration)">
+            <summary>Initializes a new instance of the <see cref="T:InternetWideWorld.CryptoLadder.ConsoleApp.Api.OrderCreate"/> class using Configuration object.</summary>
+            <param name="configuration">An instance of Configuration</param>
+        </member>
+        <member name="M:InternetWideWorld.CryptoLadder.ConsoleApp.Api.OrderCreate.ApiConfiguration">
+            <summary>Configure the API parameters.</summary>
+        </member>
+        <member name="M:InternetWideWorld.CryptoLadder.ConsoleApp.Api.OrderCreate.CallApi(InternetWideWorld.CryptoLadder.Shared.Definitions.SideEnum,InternetWideWorld.CryptoLadder.Shared.Definitions.SymbolEnum,InternetWideWorld.CryptoLadder.Shared.Definitions.OrderTypeEnum,InternetWideWorld.CryptoLadder.Shared.Definitions.TimeInForceEnum,System.Decimal,System.Double,System.Nullable{System.Double},System.Nullable{System.Double},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.String,System.String)">
+            <summary>Makes the HTTP request (Sync).</summary>
+            <param name="side">Order side</param>
+            <param name="symbol">Currency symbol for order</param>
+            <param name="orderType">Order type</param>
+            <param name="timeInForce">Time in force for order</param>
+            <param name="qty">Order quantity of perpetual contracts to buy or sell</param>
+            <param name="price">Order price of perpetual contracts to buy or sell.</param>
+            <param name="takeProfit">Order take profit (TP) price</param>
+            <param name="stopLoss">Order stop loss (SL) price </param>
+            <param name="reduceOnly">Reduce only</param>
+            <param name="closeOnTrigger">Closing trigger.  When creating a closing order, it is highly recommended to set as true to avoid failing by insufficient available margin.</param>
+            <param name="orderLinkId">Custom order identifier.</param>
+            <param name="trailingStop">Order trailing stop (TS) units.</param>
+            <remarks>As of 20190117 ByBit only support order quantity in an integer.</remarks>
+            <returns><see cref="T:InternetWideWorld.CryptoLadder.Shared.Model.OrderResBase"/> object.</returns>
+        </member>
+        <member name="M:InternetWideWorld.CryptoLadder.ConsoleApp.Api.OrderCreate.CallApiAsync(InternetWideWorld.CryptoLadder.Shared.Definitions.SideEnum,InternetWideWorld.CryptoLadder.Shared.Definitions.SymbolEnum,InternetWideWorld.CryptoLadder.Shared.Definitions.OrderTypeEnum,InternetWideWorld.CryptoLadder.Shared.Definitions.TimeInForceEnum,System.Decimal,System.Double,System.Nullable{System.Double},System.Nullable{System.Double},System.Nullable{System.Boolean},System.Nullable{System.Boolean},System.String,System.String)">
+            <summary>Makes the HTTP request (Async).</summary>
+            <param name="side">Order side</param>
+            <param name="symbol">Currency symbol for order</param>
+            <param name="orderType">Order type</param>
+            <param name="timeInForce">Time in force for order</param>
+            <param name="qty">Order quantity of perpetual contracts to buy or sell</param>
+            <param name="price">Order price of perpetual contracts to buy or sell.</param>
+            <param name="takeProfit">Order take profit (TP) price</param>
+            <param name="stopLoss">Order stop loss (SL) price </param>
+            <param name="reduceOnly">Reduce only</param>
+            <param name="closeOnTrigger">Closing trigger.  When creating a closing order, it is highly recommended to set as true to avoid failing by insufficient available margin.</param>
+            <param name="orderLinkId">Custom order identifier.</param>
+            <param name="trailingStop">Order trailing stop (TS) units.</param>
+            <remarks>As of 20190117 ByBit only support order quantity in an integer.</remarks>
+            <returns><see cref="T:InternetWideWorld.CryptoLadder.Shared.Model.OrderResBase"/> object.</returns>
+        </member>
+        <member name="M:InternetWideWorld.CryptoLadder.ConsoleApp.Api.OrderCreate.ProcessRestResponce(RestSharp.IRestResponse)">
+            <summary>Process the JSON rest response.</summary>
+            <param name="localVarResponse">JSON rest response.</param>
+            <returns><see cref="T:InternetWideWorld.CryptoLadder.ConsoleApp.Client.ApiResponse`1"/> object.</returns>
+        </member>
+        <member name="T:InternetWideWorld.CryptoLadder.ConsoleApp.BuildDependencyInjector">
+            <summary>Dependency injector container.</summary>
+        </member>
+        <member name="T:InternetWideWorld.CryptoLadder.ConsoleApp.BusinessLogic.PriceReader">
+            <summary>Read from the console the starting or ending price for the ladder.</summary>
+        </member>
+        <member name="M:InternetWideWorld.CryptoLadder.ConsoleApp.BusinessLogic.PriceReader.Get(System.Boolean)">
+            <summary>Get the price.</summary>
+            <param name="startingPrice"></param>
+            <returns>The price.</returns>
+        </member>
+        <member name="T:InternetWideWorld.CryptoLadder.ConsoleApp.BusinessLogic.QuantityReader">
+            <summary>Read from the console the quantity for the ladder.</summary>
+        </member>
+        <member name="M:InternetWideWorld.CryptoLadder.ConsoleApp.BusinessLogic.QuantityReader.Get(System.Int32)">
+            <summary>Get the total unit quantity for the order.</summary>
+            <param name="rungs">The number of rungs in the ladder.</param>
+            <returns>Order quantity.</returns>
+        </member>
+        <member name="T:InternetWideWorld.CryptoLadder.ConsoleApp.BusinessLogic.RungsReader">
+            <summary>Read from the console the number of rungs in the order ladder.</summary>
+        </member>
+        <member name="M:InternetWideWorld.CryptoLadder.ConsoleApp.BusinessLogic.RungsReader.Get">
+            <summary>Get the number of rungs.</summary>
+            <returns>The number of ladder rungs.</returns>
+        </member>
+        <member name="T:InternetWideWorld.CryptoLadder.ConsoleApp.BusinessLogic.SymbolReader">
+            <summary>Read from the console the currency symbol for the order.</summary>
+        </member>
+        <member name="M:InternetWideWorld.CryptoLadder.ConsoleApp.BusinessLogic.SymbolReader.Get">
+            <summary>Get the order currency symbol.</summary>
+            <returns>The <see cref="T:InternetWideWorld.CryptoLadder.Shared.Definitions.SymbolEnum"/></returns>
+        </member>
+        <member name="T:InternetWideWorld.CryptoLadder.ConsoleApp.Client.ApiClient">
+            <summary>API client is mainly responsible for making the HTTP call to the API back-end.</summary>
+        </member>
+        <member name="M:InternetWideWorld.CryptoLadder.ConsoleApp.Client.ApiClient.#ctor">
+            <summary>Initializes a new instance of the <see cref="T:InternetWideWorld.CryptoLadder.ConsoleApp.Client.ApiClient" /> class with default configuration.</summary>
+        </member>
+        <member name="M:InternetWideWorld.CryptoLadder.ConsoleApp.Client.ApiClient.#ctor(InternetWideWorld.CryptoLadder.ConsoleApp.Client.Configuration)">
+            <summary>
+            Initializes a new instance of the <see cref="T:InternetWideWorld.CryptoLadder.ConsoleApp.Client.ApiClient" /> class
+            with default base path (https://api-testnet.bybit.com).
+            </summary>
+            <param name="config">An instance of Configuration.</param>
+        </member>
+        <member name="M:InternetWideWorld.CryptoLadder.ConsoleApp.Client.ApiClient.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:InternetWideWorld.CryptoLadder.ConsoleApp.Client.ApiClient" /> class
+            with default configuration.
+            </summary>
+            <param name="basePath">The base path.</param>
+        </member>
+        <member name="P:InternetWideWorld.CryptoLadder.ConsoleApp.Client.ApiClient.Configuration">
+            <summary>Gets or sets an instance of the IReadableConfiguration.</summary>
+            <value>An instance of the IReadableConfiguration.</value>
+            <remarks><see cref="T:InternetWideWorld.CryptoLadder.ConsoleApp.Client.IReadableConfiguration"/> helps us to avoid modifying possibly global configuration values from within a given client. It does not guarantee thread-safety of the <see cref="P:InternetWideWorld.CryptoLadder.ConsoleApp.Client.ApiClient.Configuration"/> instance in any way.</remarks>
+        </member>
+        <member name="P:InternetWideWorld.CryptoLadder.ConsoleApp.Client.ApiClient.RestClient">
+            <summary>Gets or sets the RestClient.</summary>
+            <value>An instance of the RestClient</value>
+        </member>
+        <member name="M:InternetWideWorld.CryptoLadder.ConsoleApp.Client.ApiClient.CallApi(System.String,RestSharp.Method,System.Collections.Generic.List{System.Collections.Generic.KeyValuePair{System.String,System.String}},System.Object,System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.Dictionary{System.String,RestSharp.FileParameter},System.Collections.Generic.Dictionary{System.String,System.String},System.String)">
+            <summary>Makes the HTTP request (Sync).</summary>
+            <param name="path">URL path.</param>
+            <param name="method">HTTP method.</param>
+            <param name="queryParams">Query parameters.</param>
+            <param name="postBody">HTTP body (POST request).</param>
+            <param name="headerParams">Header parameters.</param>
+            <param name="formParams">Form parameters.</param>
+            <param name="fileParams">File parameters.</param>
+            <param name="pathParams">Path parameters.</param>
+            <param name="contentType">Content Type of the request</param>
+            <returns>Object</returns>
+        </member>
+        <member name="M:InternetWideWorld.CryptoLadder.ConsoleApp.Client.ApiClient.CallApiAsync(System.String,RestSharp.Method,System.Collections.Generic.List{System.Collections.Generic.KeyValuePair{System.String,System.String}},System.Object,System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.Dictionary{System.String,RestSharp.FileParameter},System.Collections.Generic.Dictionary{System.String,System.String},System.String)">
+            <summary>Makes the asynchronous HTTP request.</summary>
+            <param name="path">URL path.</param>
+            <param name="method">HTTP method.</param>
+            <param name="queryParams">Query parameters.</param>
+            <param name="postBody">HTTP body (POST request).</param>
+            <param name="headerParams">Header parameters.</param>
+            <param name="formParams">Form parameters.</param>
+            <param name="fileParams">File parameters.</param>
+            <param name="pathParams">Path parameters.</param>
+            <param name="contentType">Content type.</param>
+            <returns>The Task instance.</returns>
+        </member>
+        <member name="M:InternetWideWorld.CryptoLadder.ConsoleApp.Client.ApiClient.ParameterToString(System.Object)">
+            <summary>
+            If parameter is DateTime, output in a formatted string (default ISO 8601), customizable with Configuration.DateTime.
+            If parameter is a list, join the list with ",".
+            Otherwise just return the string.
+            </summary>
+            <param name="obj">The parameter (header, path, query, form).</param>
+            <returns>Formatted string.</returns>
+        </member>
+        <member name="M:InternetWideWorld.CryptoLadder.ConsoleApp.Client.ApiClient.Deserialize(RestSharp.IRestResponse,System.Type)">
+            <summary>De-serialize the JSON string into a proper object.</summary>
+            <param name="response">The HTTP response.</param>
+            <param name="type">Object type.</param>
+            <returns>Object representation of the JSON string.</returns>
+        </member>
+        <member name="M:InternetWideWorld.CryptoLadder.ConsoleApp.Client.ApiClient.IsJsonMime(System.String)">
+             <summary>Check if the given MIME is a JSON MIME.
+            JSON MIME examples:
+                application/json
+                application/json; charset=UTF8
+                APPLICATION/JSON
+                application/vnd.company+json
+             </summary>
+             <param name="mime">MIME</param>
+             <returns>Returns True if MIME type is json.</returns>
+        </member>
+        <member name="M:InternetWideWorld.CryptoLadder.ConsoleApp.Client.ApiClient.SelectHeaderContentType(System.String[])">
+            <summary>
+            Select the Content-Type header's value from the given content-type array:
+            if JSON type exists in the given array, use it;
+            otherwise use the first one defined in 'consumes'
+            </summary>
+            <param name="contentTypes">The Content-Type array to select from.</param>
+            <returns>The Content-Type header to use.</returns>
+        </member>
+        <member name="M:InternetWideWorld.CryptoLadder.ConsoleApp.Client.ApiClient.SelectHeaderAccept(System.String[])">
+            <summary>Select the Accept header's value from the given accepts array: if JSON exists in the given array, use it; otherwise use all of them (joining into a string)</summary>
+            <param name="accepts">The accepts array to select from.</param>
+            <returns>The Accept header to use.</returns>
+        </member>
+        <member name="M:InternetWideWorld.CryptoLadder.ConsoleApp.Client.ApiClient.ConvertType(System.Object,System.Type)">
+            <summary>Dynamically cast the object into target type.</summary>
+            <param name="fromObject">Object to be casted</param>
+            <param name="toObject">Target type</param>
+            <returns>Casted object</returns>
+        </member>
+        <member name="M:InternetWideWorld.CryptoLadder.ConsoleApp.Client.ApiClient.SanitizeFilename(System.String)">
+            <summary>Sanitize filename by removing the path</summary>
+            <param name="filename">Filename</param>
+            <returns>Filename</returns>
+        </member>
+        <member name="M:InternetWideWorld.CryptoLadder.ConsoleApp.Client.ApiClient.ParameterToKeyValuePairs(System.String,System.String,System.Object)">
+            <summary>Convert parameters to key/value pairs. Use collectionFormat to properly format lists and collections.</summary>
+            <param name="collectionFormat">Collection format</param>
+            <param name="name">Key name.</param>
+            <param name="value">Value object.</param>
+            <returns>A list of KeyValuePairs</returns>
+        </member>
+        <member name="M:InternetWideWorld.CryptoLadder.ConsoleApp.Client.ApiClient.IsCollection(System.Object)">
+            <summary>Check if generic object is a collection.</summary>
+            <param name="value"></param>
+            <returns>True if object is a collection type</returns>
+        </member>
+        <member name="T:InternetWideWorld.CryptoLadder.ConsoleApp.Client.ApiException">
+            <summary>
+            API Exception
+            </summary>
+        </member>
+        <member name="P:InternetWideWorld.CryptoLadder.ConsoleApp.Client.ApiException.ErrorCode">
+            <summary>
+            Gets or sets the error code (HTTP status code)
+            </summary>
+            <value>The error code (HTTP status code).</value>
+        </member>
+        <member name="P:InternetWideWorld.CryptoLadder.ConsoleApp.Client.ApiException.ErrorContent">
+            <summary>
+            Gets or sets the error content (body json object)
+            </summary>
+            <value>The error content (Http response body).</value>
+        </member>
+        <member name="M:InternetWideWorld.CryptoLadder.ConsoleApp.Client.ApiException.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:InternetWideWorld.CryptoLadder.ConsoleApp.Client.ApiException"/> class.
+            </summary>
+        </member>
+        <member name="M:InternetWideWorld.CryptoLadder.ConsoleApp.Client.ApiException.#ctor(System.Int32,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:InternetWideWorld.CryptoLadder.ConsoleApp.Client.ApiException"/> class.
+            </summary>
+            <param name="errorCode">HTTP status code.</param>
+            <param name="message">Error message.</param>
+        </member>
+        <member name="M:InternetWideWorld.CryptoLadder.ConsoleApp.Client.ApiException.#ctor(System.Int32,System.String,System.Object)">
+            <summary>
+            Initializes a new instance of the <see cref="T:InternetWideWorld.CryptoLadder.ConsoleApp.Client.ApiException"/> class.
+            </summary>
+            <param name="errorCode">HTTP status code.</param>
+            <param name="message">Error message.</param>
+            <param name="errorContent">Error content.</param>
+        </member>
+        <member name="T:InternetWideWorld.CryptoLadder.ConsoleApp.Client.ApiResponse`1">
+            <summary>
+            API Response
+            </summary>
+        </member>
+        <member name="P:InternetWideWorld.CryptoLadder.ConsoleApp.Client.ApiResponse`1.StatusCode">
+            <summary>
+            Gets or sets the status code (HTTP status code)
+            </summary>
+            <value>The status code.</value>
+        </member>
+        <member name="P:InternetWideWorld.CryptoLadder.ConsoleApp.Client.ApiResponse`1.Headers">
+            <summary>
+            Gets or sets the HTTP headers
+            </summary>
+            <value>HTTP headers</value>
+        </member>
+        <member name="P:InternetWideWorld.CryptoLadder.ConsoleApp.Client.ApiResponse`1.Data">
+            <summary>
+            Gets or sets the data (parsed HTTP body)
+            </summary>
+            <value>The data.</value>
+        </member>
+        <member name="M:InternetWideWorld.CryptoLadder.ConsoleApp.Client.ApiResponse`1.#ctor(System.Int32,System.Collections.Generic.IDictionary{System.String,System.String},`0)">
+            <summary>
+            Initializes a new instance of the <see cref="T:InternetWideWorld.CryptoLadder.ConsoleApp.Client.ApiResponse`1" /> class.
+            </summary>
+            <param name="statusCode">HTTP status code.</param>
+            <param name="headers">HTTP headers.</param>
+            <param name="data">Data (parsed HTTP body)</param>
+        </member>
+        <member name="T:InternetWideWorld.CryptoLadder.ConsoleApp.Client.Configuration">
+            <summary>Represents a set of configuration settings</summary>
+        </member>
+        <member name="F:InternetWideWorld.CryptoLadder.ConsoleApp.Client.Configuration.Version">
+            <summary>Version of the package.</summary>
+            <value>Version of the package.</value>
+        </member>
+        <member name="F:InternetWideWorld.CryptoLadder.ConsoleApp.Client.Configuration.ISO8601_DATETIME_FORMAT">
+            <summary>Identifier for ISO 8601 DateTime Format</summary>
+            <remarks>See https://msdn.microsoft.com/en-us/library/az4se3k1(v=vs.110).aspx#Anchor_8 for more information.</remarks>
+        </member>
+        <member name="F:InternetWideWorld.CryptoLadder.ConsoleApp.Client.Configuration._apiKey">
+            <summary>Gets or sets the API key based on the authentication name.</summary>
+            <value>The API key.</value>
+        </member>
+        <member name="F:InternetWideWorld.CryptoLadder.ConsoleApp.Client.Configuration._apiKeyPrefix">
+            <summary>Gets or sets the prefix (e.g. Token) of the API key based on the authentication name.</summary>
+            <value>The prefix of the API key.</value>
+        </member>
+        <member name="F:InternetWideWorld.CryptoLadder.ConsoleApp.Client.Configuration.DefaultExceptionFactory">
+            <summary>
+            Default creation of exceptions for a given method name and response object
+            </summary>
+        </member>
+        <member name="P:InternetWideWorld.CryptoLadder.ConsoleApp.Client.Configuration.Default">
+            <summary>Gets or sets the default Configuration.</summary>
+            <value>Configuration.</value>
+        </member>
+        <member name="M:InternetWideWorld.CryptoLadder.ConsoleApp.Client.Configuration.#ctor">
+            <summary>Initializes a new instance of the <see cref="T:InternetWideWorld.CryptoLadder.ConsoleApp.Client.Configuration" /> class</summary>
+        </member>
+        <member name="M:InternetWideWorld.CryptoLadder.ConsoleApp.Client.Configuration.#ctor(System.Collections.Generic.IDictionary{System.String,System.String},System.Collections.Generic.IDictionary{System.String,System.String},System.Collections.Generic.IDictionary{System.String,System.String},System.String)">
+            <summary>Initializes a new instance of the <see cref="T:InternetWideWorld.CryptoLadder.ConsoleApp.Client.Configuration" /> class</summary>
+        </member>
+        <member name="P:InternetWideWorld.CryptoLadder.ConsoleApp.Client.Configuration.ApiClient">
+            <summary>Gets an instance of an ApiClient for this configuration</summary>
+        </member>
+        <member name="P:InternetWideWorld.CryptoLadder.ConsoleApp.Client.Configuration.BasePath">
+            <summary>Gets or sets the base path for API access.</summary>
+        </member>
+        <member name="P:InternetWideWorld.CryptoLadder.ConsoleApp.Client.Configuration.DefaultHeader">
+            <summary>Gets or sets the default header.</summary>
+        </member>
+        <member name="P:InternetWideWorld.CryptoLadder.ConsoleApp.Client.Configuration.Timeout">
+            <summary>Gets or sets the HTTP timeout (milliseconds) of ApiClient. Default to 100000 milliseconds.</summary>
+        </member>
+        <member name="P:InternetWideWorld.CryptoLadder.ConsoleApp.Client.Configuration.UserAgent">
+            <summary>Gets or sets the HTTP user agent.</summary>
+            <value>HTTP user agent.</value>
+        </member>
+        <member name="P:InternetWideWorld.CryptoLadder.ConsoleApp.Client.Configuration.Username">
+            <summary>Gets or sets the user name (HTTP basic authentication).</summary>
+            <value>The user name.</value>
+        </member>
+        <member name="P:InternetWideWorld.CryptoLadder.ConsoleApp.Client.Configuration.Password">
+            <summary>Gets or sets the password (HTTP basic authentication).</summary>
+            <value>The password.</value>
+        </member>
+        <member name="M:InternetWideWorld.CryptoLadder.ConsoleApp.Client.Configuration.GetApiKeyWithPrefix(System.String)">
+            <summary>Gets the API key with prefix.</summary>
+            <param name="apiKeyIdentifier">API key identifier (authentication scheme).</param>
+            <returns>API key with prefix.</returns>
+        </member>
+        <member name="P:InternetWideWorld.CryptoLadder.ConsoleApp.Client.Configuration.AccessToken">
+            <summary>Gets or sets the access token for OAuth2 authentication.</summary>
+            <value>The access token.</value>
+        </member>
+        <member name="P:InternetWideWorld.CryptoLadder.ConsoleApp.Client.Configuration.TempFolderPath">
+            <summary>Gets or sets the temporary folder path to store the files downloaded from the server.</summary>
+            <value>Folder path.</value>
+        </member>
+        <member name="P:InternetWideWorld.CryptoLadder.ConsoleApp.Client.Configuration.DateTimeFormat">
+            <summary>
+            Gets or sets the date time format used when serializing in the ApiClient
+            By default, it's set to ISO 8601 - "o", for others see:
+            https://msdn.microsoft.com/en-us/library/az4se3k1(v=vs.110).aspx
+            and https://msdn.microsoft.com/en-us/library/8kb3ddd4(v=vs.110).aspx
+            No validation is done to ensure that the string you're providing is valid
+            </summary>
+            <value>The DateTimeFormat string</value>
+        </member>
+        <member name="P:InternetWideWorld.CryptoLadder.ConsoleApp.Client.Configuration.ApiKeyPrefix">
+            <summary>
+            Gets or sets the prefix (e.g. Token) of the API key based on the authentication name.
+            </summary>
+            <value>The prefix of the API key.</value>
+        </member>
+        <member name="P:InternetWideWorld.CryptoLadder.ConsoleApp.Client.Configuration.ApiKey">
+            <summary>
+            Gets or sets the API key based on the authentication name.
+            </summary>
+            <value>The API key.</value>
+        </member>
+        <member name="M:InternetWideWorld.CryptoLadder.ConsoleApp.Client.Configuration.CreateApiClient">
+            <summary>
+            Creates a new <see cref="P:InternetWideWorld.CryptoLadder.ConsoleApp.Client.Configuration.ApiClient" /> based on this <see cref="T:InternetWideWorld.CryptoLadder.ConsoleApp.Client.Configuration" /> instance.
+            </summary>
+            <returns>The <see cref="P:InternetWideWorld.CryptoLadder.ConsoleApp.Client.Configuration.ApiClient"/> object.</returns>
+        </member>
+        <member name="T:InternetWideWorld.CryptoLadder.ConsoleApp.Client.ExceptionFactory">
+            <summary>A delegate to ExceptionFactory method.</summary>
+            <param name="methodName">Method name</param>
+            <param name="response">Response</param>
+            <returns>Exceptions</returns>
+        </member>
+        <member name="T:InternetWideWorld.CryptoLadder.ConsoleApp.Client.GlobalConfiguration">
+            <summary><see cref="T:InternetWideWorld.CryptoLadder.ConsoleApp.Client.GlobalConfiguration"/> provides a compile-time extension point for globally configuring API Clients.</summary>
+            <remarks>A customized implementation via partial class may reside in another file and may be excluded from automatic generation.</remarks>
+        </member>
+        <member name="T:InternetWideWorld.CryptoLadder.ConsoleApp.Client.IReadableConfiguration">
+            <summary>
+            Represents a readable-only configuration contract.
+            </summary>
+        </member>
+        <member name="P:InternetWideWorld.CryptoLadder.ConsoleApp.Client.IReadableConfiguration.AccessToken">
+            <summary>
+            Gets the access token.
+            </summary>
+            <value>Access token.</value>
+        </member>
+        <member name="P:InternetWideWorld.CryptoLadder.ConsoleApp.Client.IReadableConfiguration.ApiKey">
+            <summary>
+            Gets the API key.
+            </summary>
+            <value>API key.</value>
+        </member>
+        <member name="P:InternetWideWorld.CryptoLadder.ConsoleApp.Client.IReadableConfiguration.ApiKeyPrefix">
+            <summary>
+            Gets the API key prefix.
+            </summary>
+            <value>API key prefix.</value>
+        </member>
+        <member name="P:InternetWideWorld.CryptoLadder.ConsoleApp.Client.IReadableConfiguration.BasePath">
+            <summary>
+            Gets the base path.
+            </summary>
+            <value>Base path.</value>
+        </member>
+        <member name="P:InternetWideWorld.CryptoLadder.ConsoleApp.Client.IReadableConfiguration.DateTimeFormat">
+            <summary>
+            Gets the date time format.
+            </summary>
+            <value>Date time foramt.</value>
+        </member>
+        <member name="P:InternetWideWorld.CryptoLadder.ConsoleApp.Client.IReadableConfiguration.DefaultHeader">
+            <summary>
+            Gets the default header.
+            </summary>
+            <value>Default header.</value>
+        </member>
+        <member name="P:InternetWideWorld.CryptoLadder.ConsoleApp.Client.IReadableConfiguration.TempFolderPath">
+            <summary>
+            Gets the temp folder path.
+            </summary>
+            <value>Temp folder path.</value>
+        </member>
+        <member name="P:InternetWideWorld.CryptoLadder.ConsoleApp.Client.IReadableConfiguration.Timeout">
+            <summary>
+            Gets the HTTP connection timeout (in milliseconds)
+            </summary>
+            <value>HTTP connection timeout.</value>
+        </member>
+        <member name="P:InternetWideWorld.CryptoLadder.ConsoleApp.Client.IReadableConfiguration.UserAgent">
+            <summary>
+            Gets the user agent.
+            </summary>
+            <value>User agent.</value>
+        </member>
+        <member name="P:InternetWideWorld.CryptoLadder.ConsoleApp.Client.IReadableConfiguration.Username">
+            <summary>
+            Gets the username.
+            </summary>
+            <value>Username.</value>
+        </member>
+        <member name="P:InternetWideWorld.CryptoLadder.ConsoleApp.Client.IReadableConfiguration.Password">
+            <summary>
+            Gets the password.
+            </summary>
+            <value>Password.</value>
+        </member>
+        <member name="M:InternetWideWorld.CryptoLadder.ConsoleApp.Client.IReadableConfiguration.GetApiKeyWithPrefix(System.String)">
+            <summary>
+            Gets the API key with prefix.
+            </summary>
+            <param name="apiKeyIdentifier">API key identifier (authentication scheme).</param>
+            <returns>API key with prefix.</returns>
+        </member>
+        <member name="T:InternetWideWorld.CryptoLadder.ConsoleApp.Model.AppNet">
+            <summary>Application network model.</summary>
+        </member>
+        <member name="P:InternetWideWorld.CryptoLadder.ConsoleApp.Model.AppNet.TestNet">
+            <summary>Use the Test-net network.</summary>
+        </member>
+        <member name="T:InternetWideWorld.CryptoLadder.ConsoleApp.Model.AppSettings">
+            <summary>Application settings model.</summary>
+        </member>
+        <member name="P:InternetWideWorld.CryptoLadder.ConsoleApp.Model.AppSettings.ApiKey">
+            <summary>User identification API key.</summary>
+        </member>
+        <member name="P:InternetWideWorld.CryptoLadder.ConsoleApp.Model.AppSettings.Sign">
+            <summary>User identification signature key.</summary>
+        </member>
+        <member name="T:InternetWideWorld.CryptoLadder.ConsoleApp.Model.IAppSettings">
+            <summary>Application settings model interface.</summary>
+        </member>
+        <member name="P:InternetWideWorld.CryptoLadder.ConsoleApp.Model.IAppSettings.ApiKey">
+            <summary>User identification API key.</summary>
+        </member>
+        <member name="P:InternetWideWorld.CryptoLadder.ConsoleApp.Model.IAppSettings.Sign">
+            <summary>User identification signature key.</summary>
+        </member>
+        <member name="T:InternetWideWorld.CryptoLadder.ConsoleApp.Startup">
+            <summary>CryptoLadder startup runner class.</summary>
+        </member>
+        <member name="M:InternetWideWorld.CryptoLadder.ConsoleApp.Startup.#ctor(Microsoft.Extensions.Logging.ILogger{InternetWideWorld.CryptoLadder.ConsoleApp.Startup})">
+            <summary>CryptoLadder Startup constructor</summary>
+        </member>
+        <member name="M:InternetWideWorld.CryptoLadder.ConsoleApp.Startup.CreateLadder(System.String,System.String)">
+            <summary>Create a crypto ladder.</summary>
+        </member>
+    </members>
+</doc>

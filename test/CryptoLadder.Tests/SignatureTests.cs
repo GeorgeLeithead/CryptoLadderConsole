@@ -1,3 +1,4 @@
+using InternetWideWorld.CryptoLadder.Shared.BusinessLogic;
 using Xunit;
 
 namespace CryptoLadder.Tests
@@ -9,7 +10,7 @@ namespace CryptoLadder.Tests
         public void SignatureTest(string secret, string message, string expectedResult)
         {
             //When
-            string actualResult = CryptoLadder.Client.Signature.Create(secret, message);
+            string actualResult = Signature.Create(secret, message);
             //Then
             Assert.Equal(expectedResult, actualResult);
         }

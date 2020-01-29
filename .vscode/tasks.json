@@ -2,40 +2,40 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "build",
+            "label": "buildConsole",
             "command": "dotnet",
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/source/CryptoLadder/CryptoLadder.csproj",
+                "${workspaceFolder}/source/ConsoleApp/CryptoLadder.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
             "problemMatcher": "$msCompile"
         },
         {
-            "label": "publish",
+            "label": "publishConsole",
             "command": "dotnet",
             "type": "process",
             "args": [
                 "publish",
-                "${workspaceFolder}/source/CryptoLadder/CryptoLadder.csproj",
+                "${workspaceFolder}/source/ConsoleApp/CryptoLadder.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
             "problemMatcher": "$msCompile"
         },
         {
-            "label": "publishRelease",
+            "label": "publishReleaseConsole",
             "command": "dotnet",
             "type": "process",
             "problemMatcher": "$msCompile",
             "args": [
                 "publish",
-                "${workspaceFolder}/source/CryptoLadder/CryptoLadder.csproj",
+                "${workspaceFolder}/source/ConsoleApp/CryptoLadder.csproj",
                 "-c", "Release",
                 "-r", "win-x64",
-                "-o", "${workspaceFolder}/Deployment/CryptoLadder",
+                "-o", "${workspaceFolder}/Deployment/Console",
                 "/property:GenerateFullPaths=true",
                 "/property:PublishSingleFile=true",
                 "/consoleloggerparameters:NoSummary"
@@ -48,7 +48,7 @@
             "args": [
                 "watch",
                 "run",
-                "${workspaceFolder}/source/CryptoLadder/CryptoLadder.csproj",
+                "${workspaceFolder}/source/ConsoleApp/CryptoLadder.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],

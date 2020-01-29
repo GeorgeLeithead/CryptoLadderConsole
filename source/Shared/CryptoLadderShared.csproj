@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <PackageId>InternetWideWorld.CryptoLadder.Shared</PackageId>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Version>0.1.0.0</Version>
+    <Authors>code@internetwideworld.com</Authors>
+    <Company>Leithead Internet Consultancy Service Ltd</Company>
+    <Product>InternetWideWorld.CryptoLadder.Shared</Product>
+    <Description>A library for CryptoLadder that holds the shared business logic.</Description>
+    <Optimize>true</Optimize>
+    <RootNamespace>InternetWideWorld.CryptoLadder.Shared</RootNamespace>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.1.0" />
+    <PackageReference Include="System.ComponentModel.Annotations" Version="4.7.0" />
+  </ItemGroup>
+
+</Project>

@@ -10,7 +10,7 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/source/CryptoLadder/bin/Debug/netcoreapp3.1/CryptoLadder.dll",
+            "program": "${workspaceFolder}/source/ConsoleApp/bin/Debug/netcoreapp3.1/CryptoLadder.dll",
             "args": [],
             "cwd": "${workspaceFolder}/source/CryptoLadder",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
