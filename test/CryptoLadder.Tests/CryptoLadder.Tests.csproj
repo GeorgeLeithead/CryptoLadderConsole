@@ -14,7 +14,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\source\CryptoLadder\CryptoLadder.csproj" />
+    <ProjectReference Include="..\..\source\ConsoleApp\CryptoLadder.csproj" />
+    <ProjectReference Include="..\..\source\Shared\CryptoLadderShared.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,14 +1,14 @@
-using CryptoLadder.Api;
-using CryptoLadder.Client;
-using CryptoLadder.Definitions;
-using CryptoLadder.Model;
+using InternetWideWorld.CryptoLadder.ConsoleApp.Api;
+using InternetWideWorld.CryptoLadder.ConsoleApp.Client;
+using InternetWideWorld.CryptoLadder.Shared.Definitions;
+using InternetWideWorld.CryptoLadder.Shared.Model;
 using Xunit;
 
 namespace CryptoLadder.Tests
 {
     public class OrderCreateTests
     {
-        public CryptoLadder.Client.Configuration Configuration { get; set; }
+        public Configuration Configuration { get; set; }
         const string apiKey = "kxLuuAAVVcmdcbihm1";
         const string apiSecret = "Ko9bPRk9y4AVm1rVjpRoEAQeghsecirqL1rk";
         const decimal userId = 109425;
@@ -28,7 +28,7 @@ namespace CryptoLadder.Tests
         [Fact]
         public void BuyTestSync()
         {
-            this.Configuration = CryptoLadder.Client.Configuration.Default;
+            this.Configuration = Configuration.Default;
             if (string.IsNullOrEmpty(Configuration.GetApiKeyWithPrefix("api_key")))
             {
                 Configuration.Default.ApiKey.Add ("api_key", apiKey);
@@ -53,7 +53,7 @@ namespace CryptoLadder.Tests
         [Fact]
         public async System.Threading.Tasks.Task BuyTestAsync()
         {
-            this.Configuration = CryptoLadder.Client.Configuration.Default;
+            this.Configuration = Configuration.Default;
             if (string.IsNullOrEmpty(Configuration.GetApiKeyWithPrefix("api_key")))
             {
                 Configuration.Default.ApiKey.Add ("api_key", apiKey);
@@ -78,7 +78,7 @@ namespace CryptoLadder.Tests
         [Fact]
         public void SellTestSync()
         {
-            this.Configuration = CryptoLadder.Client.Configuration.Default;
+            this.Configuration = Configuration.Default;
             if (string.IsNullOrEmpty(Configuration.GetApiKeyWithPrefix("api_key")))
             {
                 Configuration.Default.ApiKey.Add ("api_key", apiKey);
@@ -103,7 +103,7 @@ namespace CryptoLadder.Tests
         [Fact]
         public async System.Threading.Tasks.Task SellTestAsync()
         {
-            this.Configuration = CryptoLadder.Client.Configuration.Default;
+            this.Configuration = Configuration.Default;
             if (string.IsNullOrEmpty(Configuration.GetApiKeyWithPrefix("api_key")))
             {
                 Configuration.Default.ApiKey.Add ("api_key", apiKey);

@@ -1,3 +1,4 @@
+using InternetWideWorld.CryptoLadder.Shared.BusinessLogic;
 using Xunit;
 
 namespace CryptoLadder.Tests
@@ -12,7 +13,7 @@ namespace CryptoLadder.Tests
         public void ValidPriceTests(string price)
         {
             // When
-            bool actualResult = CryptoLadder.BusinessLogic.PriceReader.IsPriceValid(price);
+            bool actualResult = PriceReader.IsPriceValid(price);
             // Then
             Assert.True(actualResult);
         }
@@ -26,7 +27,7 @@ namespace CryptoLadder.Tests
         public void InvalidPriceTests(string price)
         {
             // When
-            bool actualResult = CryptoLadder.BusinessLogic.PriceReader.IsPriceValid(price);
+            bool actualResult = PriceReader.IsPriceValid(price);
             // Then
             Assert.False(actualResult);
         }
@@ -39,7 +40,7 @@ namespace CryptoLadder.Tests
         public void ValidQuantityTests(string quantity, int rungs)
         {
             // When
-            bool actualResult = CryptoLadder.BusinessLogic.QuantityReader.IsQuantityValid(quantity, rungs);
+            bool actualResult = QuantityReader.IsQuantityValid(quantity, rungs);
             // Then
             Assert.True(actualResult);
         }
@@ -54,7 +55,7 @@ namespace CryptoLadder.Tests
         public void InvalidQuantityTests(string quantity, int rungs)
         {
             // When
-            bool actualResult = CryptoLadder.BusinessLogic.QuantityReader.IsQuantityValid(quantity, rungs);
+            bool actualResult = QuantityReader.IsQuantityValid(quantity, rungs);
             // Then
             Assert.False(actualResult);
         }
@@ -66,7 +67,7 @@ namespace CryptoLadder.Tests
         public void ValidRungTests(string rungs)
         {
             // When
-            bool actualResults = CryptoLadder.BusinessLogic.RungsReader.IsRungsValid(rungs);
+            bool actualResults = RungsReader.IsRungsValid(rungs);
             // Then
             Assert.True(actualResults);
         }
@@ -79,7 +80,7 @@ namespace CryptoLadder.Tests
         public void InvalidRungTests(string rungs)
         {
             // When
-            bool actualResults = CryptoLadder.BusinessLogic.RungsReader.IsRungsValid(rungs);
+            bool actualResults = RungsReader.IsRungsValid(rungs);
             // Then
             Assert.False(actualResults);
         }
@@ -93,7 +94,7 @@ namespace CryptoLadder.Tests
         public void ValidCurrencySymbolTests(string currency)
         {
             // When
-            bool actualResults = CryptoLadder.BusinessLogic.SymbolReader.IsSymbolValid(currency);
+            bool actualResults = SymbolReader.IsSymbolValid(currency);
             // Then
             Assert.True(actualResults);
         }
@@ -107,7 +108,7 @@ namespace CryptoLadder.Tests
         public void InvalidCurrencySymbolTests(string currency)
         {
             // When
-            bool actualResults = CryptoLadder.BusinessLogic.SymbolReader.IsSymbolValid(currency);
+            bool actualResults = SymbolReader.IsSymbolValid(currency);
             // Then
             Assert.False(actualResults);
         }

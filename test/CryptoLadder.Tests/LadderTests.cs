@@ -1,5 +1,6 @@
 using System.Collections.Generic;
-using CryptoLadder.Model;
+using InternetWideWorld.CryptoLadder.Shared.BusinessLogic;
+using InternetWideWorld.CryptoLadder.Shared.Model;
 using Xunit;
 
 namespace CryptoLadder.Tests
@@ -13,7 +14,7 @@ namespace CryptoLadder.Tests
         public void CalculateGapsTests(double startPrice, double endPrice, int rungs, double expectedGap)
         {
             // When
-            double actualGap = CryptoLadder.BusinessLogic.Ladder.Calculate(startPrice, endPrice, rungs);
+            double actualGap = Ladder.Calculate(startPrice, endPrice, rungs);
             // Then
             Assert.Equal(expectedGap, actualGap);
         }
