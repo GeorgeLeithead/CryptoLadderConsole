@@ -8,6 +8,7 @@ namespace CryptoLadder.Tests
 {
     public class OrderCreateTests
     {
+/*
         public Configuration Configuration { get; set; }
         const string apiKey = "kxLuuAAVVcmdcbihm1";
         const string apiSecret = "Ko9bPRk9y4AVm1rVjpRoEAQeghsecirqL1rk";
@@ -124,5 +125,6 @@ namespace CryptoLadder.Tests
             Assert.Equal(timeInForce.ToString(), result.Result.TimeInForce);
             Assert.Equal(orderStatus.ToString(), result.Result.OrderStatus);
         }        
+*/
     }
 }
