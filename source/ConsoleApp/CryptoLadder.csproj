@@ -6,7 +6,7 @@
     <VersionPrefix>0.1.0</VersionPrefix>
     <Authors>code@internetwideworld.com</Authors>
     <Company>Leithead Internet Consultancy Service Ltd</Company>
-    <Product>namespace InternetWideWorld.CryptoLadder.Console</Product>
+    <Product>InternetWideWorld.CryptoLadder.Console</Product>
     <Description>Ladder your crypto orders on ByBit</Description>
     <PublishTrimmed>true</PublishTrimmed>
     <PublishReadyToRun>true</PublishReadyToRun>

@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <ItemGroup>
+    <ProjectReference Include="..\Shared\CryptoLadderShared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.1">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.1" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <Authors>code@internetwideworld.com</Authors>
+    <Company>Leithead Internet Consultancy Service Ltd</Company>
+    <Product>InternetWideWorld.CryptoLadder.MobileApi</Product>
+    <Description>Ladder your crypto orders on ByBit</Description>
+    <Copyright>George Leithead (InternetWideWorld.com)</Copyright>
+    <PackageProjectUrl>https://github.com/GeorgeLeithead/CryptoLadderConsole</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/GeorgeLeithead/CryptoLadderConsole</RepositoryUrl>
+    <RepositoryType>GIT</RepositoryType>
+    <PackageTags>ByBit, Crypto, BTC, XRP, ETH, EOS, Ladder, trade, internetwideworld.com, George Leithead</PackageTags>
+    <NeutralLanguage>en-GB</NeutralLanguage>
+    <RootNamespace>InternetWideWorld.CryptoLadder.MobileApi</RootNamespace>
+  </PropertyGroup>
+
+</Project>
