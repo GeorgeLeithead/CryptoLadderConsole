@@ -1,6 +1,8 @@
 # CryptoLadderConsole
 A dotnet core console application that uses the ByBit API to ladder orders.
-[![Build Status](https://internetwideworld.visualstudio.com/CryptoLadder/_apis/build/status/GeorgeLeithead.CryptoLadderConsole?branchName=master)](https://internetwideworld.visualstudio.com/CryptoLadder/_build/latest?definitionId=4&branchName=master)
+## Status
+> [![Build Status](https://internetwideworld.visualstudio.com/CryptoLadder/_apis/build/status/GeorgeLeithead.CryptoLadderConsole?branchName=master)](https://internetwideworld.visualstudio.com/CryptoLadder/_build/latest?definitionId=4&branchName=master)
+> [![Deployment Status](https://internetwideworld.vsrm.visualstudio.com/_apis/public/Release/badge/4845c46d-deb5-4c4b-8079-9ab2da28d76e/2/2)](https://internetwideworld.vsrm.visualstudio.com/_apis/public/Release/badge/4845c46d-deb5-4c4b-8079-9ab2da28d76e/2/2)
 ## Getting Your API Key and Secret Key
 
 > For Testnet
