@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using SharedBusinessLogic = InternetWideWorld.CryptoLadder.Shared.BusinessLogic;
 using InternetWideWorld.CryptoLadder.Shared.Model;
 
-namespace CryptoLadderMobileApp.Controllers
+namespace InternetWideWorld.CryptoLadder.MobileApi.Controllers
 {
     [Route("[controller]")]
     [ApiController]

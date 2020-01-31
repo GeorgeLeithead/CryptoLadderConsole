@@ -9,7 +9,7 @@
            "type": "coreclr",
            "request": "launch",
            "preLaunchTask": "buildMobileApi",
-           "program": "${workspaceFolder}/source/MobileApi/bin/Debug/netcoreapp3.1/CryptoLadderMobileApp.dll",
+           "program": "${workspaceFolder}/source/MobileApi/bin/Debug/netcoreapp3.0/CryptoLadderMobileApp.dll",
            "args": [],
            "cwd": "${workspaceFolder}",
            "stopAtEntry": false,
