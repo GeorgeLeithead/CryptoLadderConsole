@@ -131,7 +131,7 @@ namespace InternetWideWorld.CryptoLadder.ConsoleApp.Client
                 }
 
                 queryString = queryString[1..];
-                request.AddQueryParameter("sign", Signature.Create("Ko9bPRk9y4AVm1rVjpRoEAQeghsecirqL1rk", queryString));
+                request.AddQueryParameter("sign", Signature.Create(Configuration.GetApiKeyWithPrefix("sign"), queryString));
             }
 
             return request;

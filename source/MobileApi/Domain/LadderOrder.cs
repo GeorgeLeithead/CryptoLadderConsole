@@ -6,36 +6,26 @@ using InternetWideWorld.CryptoLadder.Shared.Definitions;
 
 namespace InternetWideWorld.CryptoLadder.MobileApi.Domain
 {
-    public class LadderOrder : Signature, IValidatableObject
+    public class LadderOrder : OrderRequest, IValidatableObject
     {
-        /// <summary>Order currency.</summary>
-        [Required]
-        [StringLength(3, MinimumLength=3, ErrorMessage = "{0} must be between {2} and {1} in length.")]
-        public string Currency { get; set; }
-
         /// <summary>Number of ladder rungs.</summary>
         [Required]
         [Range(2, 99, ErrorMessage = "{0} must be between {2} and {1}.")]
         public int Rungs { get; set; }
 
-        /// <summary>Ladder starting price.</summary>
-        [Required]
-        [Range(0.0001, 1000000, ErrorMessage = "{0} must be in the range of {2} to {1}.")]
-        public decimal StartPrice { get; set; }
-
         /// <summary>Ladder ending price.</summary>
         [Required]
         [Range(0.0001, 1000000, ErrorMessage = "{0} must be in the range of {2} to {1}.")]
-        public decimal EndPrice { get; set; }
-
-        /// <summary>Order quantity.</summary>
-        [Required]
-        [Range(1, 100000000, ErrorMessage = "{0} must be in the range of {2} to {1}.")]
-        public int Quantity { get; set; }
+        public double EndPrice { get; set; }
 
         /// <summary>Custom validation of the ladder order object.</summary>
-        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
+            foreach(ValidationResult result in base.Validate(validationContext).ToList())
+            {
+                yield return result;
+            }
+
             if (StartPrice == EndPrice)
             {
                 yield return new ValidationResult(

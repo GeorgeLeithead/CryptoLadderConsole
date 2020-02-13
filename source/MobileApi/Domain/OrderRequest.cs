@@ -55,7 +55,7 @@ namespace InternetWideWorld.CryptoLadder.MobileApi.Domain
         /// <summary>Order price.</summary>
         [Required]
         [Range(0.0001, 1000000, ErrorMessage = "{0} must be in the range of {2} to {1}.")]
-        public double Price { get; set; }
+        public double StartPrice { get; set; }
 
         /// <summary>Order quantity.</summary>
         [Required]
@@ -63,7 +63,7 @@ namespace InternetWideWorld.CryptoLadder.MobileApi.Domain
         public int Quantity { get; set; }
 
         /// <summary>Custom validation of the ladder order object.</summary>
-        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        public virtual IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             if (Symbol == null)
             {
