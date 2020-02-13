@@ -1,15 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using InternetWideWorld.CryptoLadder.MobileApi.Extensions;
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 
 namespace InternetWideWorld.CryptoLadder.MobileApi
 {
@@ -26,6 +21,8 @@ namespace InternetWideWorld.CryptoLadder.MobileApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddHttpClient();
+            services.AddSingleton<Client.ByBitService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -35,6 +32,14 @@ namespace InternetWideWorld.CryptoLadder.MobileApi
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            //app.ConfigureCustomExceptionMiddleware(); Not ready yet
+
+            app.UseCors(builder => builder
+            .AllowAnyOrigin()
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            );
 
             app.UseHttpsRedirection();
 

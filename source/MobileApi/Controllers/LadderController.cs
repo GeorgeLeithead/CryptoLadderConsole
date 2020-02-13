@@ -1,9 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SharedBusinessLogic = InternetWideWorld.CryptoLadder.Shared.BusinessLogic;
 using InternetWideWorld.CryptoLadder.Shared.Model;
