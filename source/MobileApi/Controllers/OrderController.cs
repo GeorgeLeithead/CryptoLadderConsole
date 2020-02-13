@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using InternetWideWorld.CryptoLadder.MobileApi.Client;
@@ -30,16 +31,17 @@ namespace InternetWideWorld.CryptoLadder.MobileApi.Controllers
         /// <summary>Create an order</summary>
         [HttpPost("Create", Name = "Create")]
         [Produces("application/json")]
-        public async Task<ActionResult<OrderResBase>> CreateOrder(OrderRequest orderRequest)
+        public async Task<ActionResult<OrderResBase>> CreateOrder(OrderRequest order)
         {
-            return await this.ByBitService.PlaceOrder(orderRequest);
+            return await this.ByBitService.PlaceOrder(order);
         }
 
         /// <summary>Create a laddered order.</summary>
         [HttpPost("Ladder", Name = "Ladder")]
-        public IActionResult CreateLadder(LadderOrder order)
+        [Produces("application/json")]
+        public async Task<ActionResult<List<OrderResBase>>> CreateLadder(LadderOrder order)
         {
-            return Ok($"Ladder order");
+            return await this.ByBitService.PlaceOrder(order);
         }
     }
 }

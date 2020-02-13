@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using System.IO;
+using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using InternetWideWorld.CryptoLadder.MobileApi.Domain;
 using InternetWideWorld.CryptoLadder.Shared.Model;
 using Microsoft.Extensions.Logging;
+using SharedBusinessLogic = InternetWideWorld.CryptoLadder.Shared.BusinessLogic;
 
 namespace InternetWideWorld.CryptoLadder.MobileApi.Client
 {
@@ -34,11 +35,10 @@ namespace InternetWideWorld.CryptoLadder.MobileApi.Client
             this.Client.DefaultRequestHeaders.Add("User-Agent", "CryptoLadder");
         }
 
-        public async Task<OrderResBase> PlaceOrder(OrderRequest orderRequest)
+        public async Task<OrderResBase> PlaceOrder(OrderRequest order)
         {
-            // TODO: Need to be able to construct URL, FORM bosy and also apply SIGNATURE
-            HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Post, path + BusinessLogic.OrderCreate.GenerateQueryParameters(orderRequest));
-            string postParams = BusinessLogic.OrderCreate.GenerateFormParameters(orderRequest);
+            HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Post, path + BusinessLogic.OrderCreate.GenerateQueryParameters(order));
+            string postParams = BusinessLogic.OrderCreate.GenerateFormParameters(order);
             requestMessage.Content = new StringContent(postParams, Encoding.UTF8, "application/x-www-form-urlencoded");
             HttpResponseMessage response = await this.Client.SendAsync(requestMessage);
             response.EnsureSuccessStatusCode();
@@ -46,6 +46,38 @@ namespace InternetWideWorld.CryptoLadder.MobileApi.Client
             {
                 return await JsonSerializer.DeserializeAsync<OrderResBase>(responseStream);
             }
+        }
+
+        public async Task<List<OrderResBase>> PlaceOrder(LadderOrder order)
+        {
+            List<OrderResBase> results = new List<OrderResBase>();
+            List<LinearRungs> linearLadder = SharedBusinessLogic.Ladder.Linear(order.StartPrice, order.EndPrice, order.Rungs, order.Quantity);
+            foreach (LinearRungs linearRungs in linearLadder.Where(ll => ll.Quantity > 0))
+            {
+                OrderRequest linearOrder = new OrderRequest
+                {
+                    ApiKey = order.ApiKey,
+                    Sign = order.Sign,
+                    Currency = order.Currency,
+                    Symbol = order.Symbol,
+                    Side = order.Side,
+                    OrderSide = order.OrderSide,
+                    StartPrice = linearRungs.Price,
+                    Quantity = linearRungs.Quantity
+                };
+                HttpRequestMessage requestMessage = new HttpRequestMessage(HttpMethod.Post, path + BusinessLogic.OrderCreate.GenerateQueryParameters(linearOrder));
+                string postParams = BusinessLogic.OrderCreate.GenerateFormParameters(linearOrder);
+                requestMessage.Content = new StringContent(postParams, Encoding.UTF8, "application/x-www-form-urlencoded");
+                HttpResponseMessage response = await this.Client.SendAsync(requestMessage);
+                response.EnsureSuccessStatusCode();
+                using (var responseStream = await response.Content.ReadAsStreamAsync())
+                {
+                    results.Add(await JsonSerializer.DeserializeAsync<OrderResBase>(responseStream));
+                }
+                Task.Delay(1000).Wait();
+            }
+
+            return results;
         }
     }
 }

@@ -29,26 +29,78 @@
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script type="text/javascript">
-        PlaceOrder = function () {
-            var orderForm = $("#CryptoLadderForm");
+        SubmitOrder = function () {
+            if ($.isNumeric($('input[name=StartPrice]').val()) === false) {
+                alert("Start price must be between 0.0001 and 1000000.");
+                return;
+            }
+            if ($.isNumeric($('input[name=Quantity]').val()) === false) {
+                alert("Quantity must be between 1 and 100000000.");
+                return;
+            }
+            if (parseInt($('input[name=Rungs]').val()) >= 2) {
+                PlaceLadderOrder();
+            } else {
+                PlaceSingleOrder();
+            }
+        };
+        PlaceLadderOrder = function () {
+            $("<div>Place Ladder- " + $('input[name=Side]').val() + " " + parseInt($('input[name=Quantity]').val()) + " " + $('select[name=Currency] option:selected').val() + " @ $" + parseFloat($('input[name=StartPrice]').val()) + " to " + parseFloat($('input[name=EndPrice]').val()) + " with " + parseInt($('input[name=Rungs]').val()) + " rungs</div>").appendTo("#message");
             var formData = {
                 "apikey": $('input[name=apikey]').val(),
                 "Sign": $('input[name=Sign]').val(),
                 "Currency": $('select[name=Currency] option:selected').val(),
                 "Side": $('input[name=Side]').val(),
-                "Price": parseFloat($('input[name=Price]').val()),
-                "Quantity": parseFloat($('input[name=Quantity]').val())
+                "StartPrice": parseFloat($('input[name=StartPrice]').val()),
+                "EndPrice": parseFloat($('input[name=EndPrice]').val()),
+                "Rungs": parseInt($('input[name=Rungs]').val()),
+                "Quantity": parseInt($('input[name=Quantity]').val())
             };
-            alert(JSON.stringify(formData));
+            var orderForm = $("#CryptoLadderForm");
+            var formUrl = orderForm.prop('action') + "/Ladder";
+            PlaceOrder(formUrl, formData, orderForm.prop('method'));
+        };
+        PlaceSingleOrder = function () {
+            $("<div>Place Order- " + $('input[name=Side]').val() + " " + parseInt($('input[name=Quantity]').val()) + " " + $('select[name=Currency] option:selected').val() + " @ $" + parseFloat($('input[name=StartPrice]').val()) + "</div>").appendTo("#message");
+            var formData = {
+                "apikey": $('input[name=apikey]').val(),
+                "Sign": $('input[name=Sign]').val(),
+                "Currency": $('select[name=Currency] option:selected').val(),
+                "Side": $('input[name=Side]').val(),
+                "StartPrice": parseFloat($('input[name=StartPrice]').val()),
+                "Quantity": parseInt($('input[name=Quantity]').val())
+            };
+            var orderForm = $("#CryptoLadderForm");
+            var formUrl = orderForm.prop('action') + "/Create";
+            PlaceOrder(formUrl, formData, orderForm.prop('method'));
+        };
+        PlaceOrder = function (formUrl, formData, formType) {
             $.ajax({
-                url: orderForm.prop('action'),
-                type: orderForm.prop('method'),
+                url: formUrl,
+                type: formType,
                 data: JSON.stringify(formData),
                 dataType: "json",
                 contentType: "application/json",
-                success: function (result) {
-                    alert(result);
-                    $("#message").html(result);
+                success: function (jsonResult) {
+                    if (Array.isArray(jsonResult)) {
+                        console.log("Result is array");
+                        for (var i in jsonResult) {
+                            console.log(JSON.stringify(jsonResult[i]));
+                            if (jsonResult[i].ret_code !== 0) {
+                                $("<div>ERROR- " + jsonResult[i].ret_code + ": " + jsonResult[i].ret_msg + "<br /><br /></div>").appendTo("#message");
+                            } else {
+                                $("<div>ORDER- " + jsonResult[i].result.order_status + ": " + jsonResult[i].result.side + " " + jsonResult[i].result.qty + " " + jsonResult[i].result.symbol + " @ $" + jsonResult[i].result.price + ", " + jsonResult[i].result.created_at + "<br /><br /></div>").appendTo("#message");
+                            }
+                        }
+                    } else {
+                        console.log("Result is NOT array");
+                        console.log(JSON.stringify(jsonResult));
+                        if (jsonResult.ret_code !== 0) {
+                            $("<div>ERROR- " + jsonResult.ret_code + ": " + jsonResult.ret_msg + "<br /><br /></div>").appendTo("#message");
+                        } else {
+                            $("<div>ORDER- " + jsonResult.result.order_status + ": " + jsonResult.result.side + " " + jsonResult.result.qty + " " + jsonResult.result.symbol + " @ $" + jsonResult.result.price + ", " + jsonResult.result.created_at + "<br /><br /></div>").appendTo("#message");
+                        }
+                    }
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     alert(xhr.status);
@@ -56,60 +108,472 @@
                 }
             });
         };
+        $.when($.ready).then(function () {
+            /* Slider */
+            var rungsSlider = document.getElementById("Rungs");
+            var rungsSelected = document.getElementById("RungsSelected");
+            rungsSelected.innerText = rungsSlider.value;
+            rungsSlider.oninput = function () {
+                rungsSelected.innerText = this.value;
+            }
+            ShowSign = function () {
+                var signInput = document.getElementById("Sign");
+                if (signInput.type === "password") {
+                    signInput.type = "text";
+                } else {
+                    signInput.type = "password";
+                }
+            }
+            /* Select  */
+            var x, i, j, selElmnt, a, b, c;
+            /* Look for any elements with the class "custom-select": */
+            x = document.getElementsByClassName("custom-select");
+            for (i = 0; i < x.length; i++) {
+                selElmnt = x[i].getElementsByTagName("select")[0];
+                /* For each element, create a new DIV that will act as the selected item: */
+                a = document.createElement("DIV");
+                a.setAttribute("class", "select-selected");
+                a.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML;
+                x[i].appendChild(a);
+                /* For each element, create a new DIV that will contain the option list: */
+                b = document.createElement("DIV");
+                b.setAttribute("class", "select-items select-hide");
+                for (j = 1; j < selElmnt.length; j++) {
+                    /* For each option in the original select element,
+                    create a new DIV that will act as an option item: */
+                    c = document.createElement("DIV");
+                    c.innerHTML = selElmnt.options[j].innerHTML;
+                    c.addEventListener("click", function (e) {
+                        /* When an item is clicked, update the original select box,
+                        and the selected item: */
+                        var y, i, k, s, h;
+                        s = this.parentNode.parentNode.getElementsByTagName("select")[0];
+                        h = this.parentNode.previousSibling;
+                        for (i = 0; i < s.length; i++) {
+                            if (s.options[i].innerHTML == this.innerHTML) {
+                                s.selectedIndex = i;
+                                h.innerHTML = this.innerHTML;
+                                y = this.parentNode.getElementsByClassName("same-as-selected");
+                                for (k = 0; k < y.length; k++) {
+                                    y[k].removeAttribute("class");
+                                }
+                                this.setAttribute("class", "same-as-selected");
+                                break;
+                            }
+                        }
+                        h.click();
+                    });
+                    b.appendChild(c);
+                }
+                x[i].appendChild(b);
+                a.addEventListener("click", function (e) {
+                    /* When the select box is clicked, close any other select boxes,
+                    and open/close the current select box: */
+                    e.stopPropagation();
+                    closeAllSelect(this);
+                    this.nextSibling.classList.toggle("select-hide");
+                    this.classList.toggle("select-arrow-active");
+                });
+            }
+
+            function closeAllSelect(elmnt) {
+                /* A function that will close all select boxes in the document,
+                except the current select box: */
+                var x, y, i, arrNo = [];
+                x = document.getElementsByClassName("select-items");
+                y = document.getElementsByClassName("select-selected");
+                for (i = 0; i < y.length; i++) {
+                    if (elmnt == y[i]) {
+                        arrNo.push(i)
+                    } else {
+                        y[i].classList.remove("select-arrow-active");
+                    }
+                }
+                for (i = 0; i < x.length; i++) {
+                    if (arrNo.indexOf(i)) {
+                        x[i].classList.add("select-hide");
+                    }
+                }
+            }
+
+            /* If the user clicks anywhere outside the select box, then close all select boxes: */
+            document.addEventListener("click", closeAllSelect);
+        });
     </script>
 </head>
 
 <body lang="en-us" dir="ltr">
     <h1>CryptoLadder</h1>
-    <p>This web page allows the user to use the CryptoLadder function.</p>
-    <form id="CryptoLadderForm" method="POST" action="https://localhost:5001/Order/Create" enctype="application/json">
-        <div>
-            <label for="apikey">API Key</label>
-        </div>
-        <div>
-            <input name="apikey" type="text" value="kxLuuAAVVcmdcbihm1" />
-        </div>
-        <div>
-            <label for="Sign">Sign</label>
-        </div>
-        <div>
-            <input name="Sign" type="text" value="Ko9bPRk9y4AVm1rVjpRoEAQeghsecirqL1rk" />
-        </div>
-        <div>
-            <label for="Currency">Currency</label>
-        </div>
-        <div>
-            <select name="Currency" multiple="false">
-                <option value="BTC">BTC</option>
-                <option value="ETH">ETH</option>
-                <option value="EOS">EOS</option>
-                <option value="XRP" selected="selected">XRP</option>
-            </select>
-        </div>
-        <div>
-            <label for="Side">Side</label>
-        </div>
-        <div>
-            <input type="radio" name="Side" value="Buy" checked="checked" />Buy</br>
-            <input type="radio" name="Side" value="Sell" />Sell
-        </div>
-        <div>
-            <label for="Price">Price in USD (between 0.0001 and 1000000)</label>
-        </div>
-        <div>
-            <input type="number" name="Price" min="0.0001" max="1000000" step="0.0001" />
-        </div>
-        <div>
-            <label for="Quantity">Quantity (between 1 and 100000000)</label>
-        </div>
-        <div>
-            <input type="number" name="Quantity" min="1" max="100000000" step="1" />
-        </div>
-        <div>
-            <button type="button" onclick="PlaceOrder();">Order</button>
-        </div>
-    </form>
+    <div class="container">
+        <form id="CryptoLadderForm" method="POST" xaction="https://cryptoladdermobileapi.azurewebsites.net/Order"
+            action="https://localhost:5001/Order" enctype="application/json">
+            <div class="row">
+                <div class="col-25">
+                    <label for="apikey">API Key</label>
+                </div>
+                <div class="col-75">
+                    <input id="apikey" name="apikey" type="text" spellcheck="false" value="" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label for="Sign">Sign</label>
+                </div>
+                <div class="col-75">
+                    <input name="Sign" id="Sign" type="password" spellcheck="false" value="" />
+                    <input type="checkbox" onclick="ShowSign()" />Show
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label for="Currency">Currency</label>
+                </div>
+                <div class="col-75 custom-select">
+                    <select id="Currency" name="Currency" multiple="false">
+                        <option value="">Currency</option>
+                        <option value="BTC">BTC</option>
+                        <option value="ETH">ETH</option>
+                        <option value="EOS">EOS</option>
+                        <option value="XRP" selected="selected">XRP</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label for="Side">Side</label>
+                </div>
+                <div class="col-75">
+                    <label class="radioButton" title="Place a LONG order">Buy
+                        <input type="radio" checked="checked" name="Side" value="Buy" />
+                        <span class="checkmark"></span>
+                    </label>
+                    <label class="radioButton" title="Place a SHORT order">Sell
+                        <input type="radio" name="Side" value="Sell" />
+                        <span class="checkmark"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label for="StartPrice">Start Price (USD)</label>
+                </div>
+                <div class="col-75">
+                    <input type="number" id="StartPrice" name="StartPrice" min="0.0001" max="1000000" step="0.0001"
+                        title="Between 0.0001 and 1000000" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label for="EndPrice">End Price (USD)</label>
+                </div>
+                <div class="col-75">
+                    <input type="number" id="EndPrice" name="EndPrice" min="0.0001" max="1000000" step="0.0001"
+                        title="Between 0.0001 and 1000000" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label for="Rungs">Ladder Rungs (<span id="RungsSelected">1</span>)</label>
+                </div>
+                <div class="col-75 slidecontainer">
+                    <input type="range" min="1" max="99" value="1" id="Rungs" name="Rungs" class="slider"
+                        title="Ladder order when 2 or more" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label for="Quantity">Quantity</label>
+                </div>
+                <div class="col-75">
+                    <input type="number" id="Quantity" name="Quantity" min="1" max="100000000" step="1"
+                        title="Between 1and 100000000" />
+                </div>
+            </div>
+            <div class="row">
+                <button type="button" onclick="SubmitOrder();">Order</button>
+            </div>
+        </form>
+    </div>
     <p id="message"></p>
+    <style>
+        /* Tool-tip titles */
+        [title]:hover:after {
+            content: attr(title);
+        }
+
+        [title]>* {
+            user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            -webkit-user-select: none;
+        }
+
+        [title]:hover>* {
+            user-select: auto;
+            -moz-user-select: auto;
+            -ms-user-select: auto;
+            -webkit-user-select: auto;
+        }
+
+        /* Style inputs, select elements and textareas */
+        input[type=text],
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            resize: vertical;
+        }
+
+        /* Style the label to display next to the inputs */
+        label {
+            padding: 12px 12px 12px 0;
+            display: inline-block;
+        }
+
+        /* Style the submit button */
+        button {
+            background-color: DodgerBlue;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            float: right;
+        }
+
+        /* Style the container */
+        .container {
+            border-radius: 5px;
+            background-color: #f2f2f2;
+            padding: 20px;
+        }
+
+        /* Floating column for labels: 25% width */
+        .col-25 {
+            float: left;
+            width: 25%;
+            margin-top: 6px;
+        }
+
+        /* Floating column for inputs: 75% width */
+        .col-75 {
+            float: left;
+            width: 75%;
+            margin-top: 6px;
+        }
+
+        /* Non-floating column for inputs: 100% width */
+        .col-100 {
+            float: left;
+            width: 100%;
+            margin-top: 6px;
+        }
+
+        /* Clear floats after the columns */
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        /* SLIDER */
+        /* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+        @media screen and (max-width: 600px) {
+
+            .col-25,
+            .col-75,
+            input[type=submit] {
+                width: 100%;
+                margin-top: 0;
+            }
+        }
+
+        /* The slider itself */
+        .slider {
+            -webkit-appearance: none;
+            /* Override default CSS styles */
+            appearance: none;
+            width: 100%;
+            /* Full-width */
+            height: 25px;
+            /* Specified height */
+            background: #d3d3d3;
+            /* Grey background */
+            outline: none;
+            /* Remove outline */
+            opacity: 0.7;
+            /* Set transparency (for mouse-over effects on hover) */
+            -webkit-transition: .2s;
+            /* 0.2 seconds transition on hover */
+            transition: opacity .2s;
+        }
+
+        /* Mouse-over effects */
+        .slider:hover {
+            opacity: 1;
+            /* Fully shown on mouse-over */
+        }
+
+        /* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            /* Override default look */
+            appearance: none;
+            width: 25px;
+            /* Set a specific slider handle width */
+            height: 25px;
+            /* Slider handle height */
+            background: DodgerBlue;
+            /* Green background */
+            cursor: pointer;
+            /* Cursor on hover */
+        }
+
+        .slider::-moz-range-thumb {
+            width: 25px;
+            /* Set a specific slider handle width */
+            height: 25px;
+            /* Slider handle height */
+            background: DodgerBlue;
+            /* Green background */
+            cursor: pointer;
+            /* Cursor on hover */
+        }
+
+        /* Custom select */
+        /* The container must be positioned relative: */
+        .custom-select {
+            position: relative;
+            font-family: Arial;
+            width: 8em;
+        }
+
+        .custom-select select {
+            display: none;
+            /*hide original SELECT element: */
+        }
+
+        .select-selected {
+            background-color: DodgerBlue;
+        }
+
+        /* Style the arrow inside the select element: */
+        .select-selected:after {
+            position: absolute;
+            content: "";
+            top: 14px;
+            right: 10px;
+            width: 0;
+            height: 0;
+            border: 6px solid transparent;
+            border-color: #fff transparent transparent transparent;
+        }
+
+        /* Point the arrow upwards when the select box is open (active): */
+        .select-selected.select-arrow-active:after {
+            border-color: transparent transparent #fff transparent;
+            top: 7px;
+        }
+
+        /* style the items (options), including the selected item: */
+        .select-items div,
+        .select-selected {
+            color: #ffffff;
+            padding: 8px 16px;
+            border: 1px solid transparent;
+            border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+            cursor: pointer;
+        }
+
+        /* Style items (options): */
+        .select-items {
+            position: absolute;
+            background-color: DodgerBlue;
+            top: 100%;
+            left: 0;
+            right: 0;
+            z-index: 99;
+        }
+
+        /* Hide the items when the select box is closed: */
+        .select-hide {
+            display: none;
+        }
+
+        .select-items div:hover,
+        .same-as-selected {
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+
+        /* Radio Button */
+        /* The container */
+        .radioButton {
+            display: table-cell;
+            position: relative;
+            padding-left: 35px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            font-size: 22px;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        /* Hide the browser's default radio button */
+        .radioButton input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        /* Create a custom radio button */
+        .checkmark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 25px;
+            width: 25px;
+            background-color: #eee;
+            border-radius: 50%;
+        }
+
+        /* On mouse-over, add a grey background color */
+        .radioButton:hover input~.checkmark {
+            background-color: #d3d3d3;
+            opacity: 1;
+        }
+
+        /* When the radio button is checked, add a blue background */
+        .radioButton input:checked~.checkmark {
+            background-color: #2196F3;
+        }
+
+        /* Create the indicator (the dot/circle - hidden when not checked) */
+        .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+
+        /* Show the indicator (dot/circle) when checked */
+        .radioButton input:checked~.checkmark:after {
+            display: block;
+        }
+
+        /* Style the indicator (dot/circle) */
+        .radioButton .checkmark:after {
+            top: 9px;
+            left: 9px;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: white;
+        }
+    </style>
 </body>
 
 </html>
