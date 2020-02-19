@@ -1,5 +1,3 @@
-using InternetWideWorld.CryptoLadder.MobileApi.Extensions;
-
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -18,7 +16,7 @@ namespace InternetWideWorld.CryptoLadder.MobileApi
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public static void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
             services.AddHttpClient();
@@ -26,7 +24,7 @@ namespace InternetWideWorld.CryptoLadder.MobileApi
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public static void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {

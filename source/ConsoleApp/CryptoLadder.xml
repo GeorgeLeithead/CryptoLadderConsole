@@ -288,7 +288,7 @@
              <summary>Check if the given MIME is a JSON MIME.
             JSON MIME examples:
                 application/json
-                application/json; charset=UTF8
+                application/json; CharSet=UTF8
                 APPLICATION/JSON
                 application/vnd.company+json
              </summary>
@@ -347,7 +347,7 @@
             <summary>
             Gets or sets the error content (body json object)
             </summary>
-            <value>The error content (Http response body).</value>
+            <value>The error content (HTTP response body).</value>
         </member>
         <member name="M:InternetWideWorld.CryptoLadder.ConsoleApp.Client.ApiException.#ctor">
             <summary>
@@ -542,7 +542,7 @@
             <summary>
             Gets the date time format.
             </summary>
-            <value>Date time foramt.</value>
+            <value>Date time format.</value>
         </member>
         <member name="P:InternetWideWorld.CryptoLadder.ConsoleApp.Client.IReadableConfiguration.DefaultHeader">
             <summary>
@@ -570,9 +570,9 @@
         </member>
         <member name="P:InternetWideWorld.CryptoLadder.ConsoleApp.Client.IReadableConfiguration.Username">
             <summary>
-            Gets the username.
+            Gets the UserName.
             </summary>
-            <value>Username.</value>
+            <value>UserName.</value>
         </member>
         <member name="P:InternetWideWorld.CryptoLadder.ConsoleApp.Client.IReadableConfiguration.Password">
             <summary>
@@ -618,7 +618,7 @@
             <summary>CryptoLadder Startup constructor</summary>
         </member>
         <member name="M:InternetWideWorld.CryptoLadder.ConsoleApp.Startup.CreateLadder(System.String,System.String)">
-            <summary>Create a crypto ladder.</summary>
+            <summary>Create a CryptoLadder.</summary>
         </member>
     </members>
 </doc>

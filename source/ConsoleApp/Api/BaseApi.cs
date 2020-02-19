@@ -36,7 +36,7 @@ namespace InternetWideWorld.CryptoLadder.ConsoleApp.Api
         /// <param name="configuration">An instance of Configuration</param>
         public BaseApi(Configuration configuration = null)
         {
-            Configuration = (configuration == null) ? Configuration.Default : configuration;
+            Configuration = configuration ?? Configuration.Default;
             ExceptionFactory = Configuration.DefaultExceptionFactory;
             localVarHttpContentType = Configuration.ApiClient.SelectHeaderContentType(new string[] {
                 "application/json",

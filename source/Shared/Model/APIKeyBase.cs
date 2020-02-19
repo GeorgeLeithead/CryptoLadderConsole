@@ -1,16 +1,16 @@
 using System;
-using System.Linq;
-using System.Text;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Runtime.Serialization;
+using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace InternetWideWorld.CryptoLadder.Shared.Model
 {
     /// <summary>
-    /// Get bybit server time.
+    /// Get ByBit server time.
     /// </summary>
     [DataContract]
     public partial class APIKeyBase : IEquatable<APIKeyBase>, IValidatableObject
@@ -30,14 +30,14 @@ namespace InternetWideWorld.CryptoLadder.Shared.Model
         /// <param name="extInfo">extInfo.</param>
         /// <param name="result">result.</param>
         /// <param name="timeNow">timeNow.</param>
-        public APIKeyBase(decimal? retCode = default(decimal?), string retMsg = default(string), string extCode = default(string), string extInfo = default(string), List<APIKeyInfo> result = default(List<APIKeyInfo>), string timeNow = default(string))
+        public APIKeyBase(decimal? retCode = default, string retMsg = default, string extCode = default, string extInfo = default, List<APIKeyInfo> result = default, string timeNow = default)
         {
-            this.RetCode = retCode;
-            this.RetMsg = retMsg;
-            this.ExtCode = extCode;
-            this.ExtInfo = extInfo;
-            this.Result = result;
-            this.TimeNow = timeNow;
+            RetCode = retCode;
+            RetMsg = retMsg;
+            ExtCode = extCode;
+            ExtInfo = extInfo;
+            Result = result;
+            TimeNow = timeNow;
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace InternetWideWorld.CryptoLadder.Shared.Model
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            var sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             sb.Append("class APIKeyBase {\n");
             sb.Append("  RetCode: ").Append(RetCode).Append("\n");
             sb.Append("  RetMsg: ").Append(RetMsg).Append("\n");
@@ -120,7 +120,7 @@ namespace InternetWideWorld.CryptoLadder.Shared.Model
         /// <returns>Boolean</returns>
         public override bool Equals(object input)
         {
-            return this.Equals(input as APIKeyBase);
+            return Equals(input as APIKeyBase);
         }
 
         /// <summary>
@@ -131,38 +131,40 @@ namespace InternetWideWorld.CryptoLadder.Shared.Model
         public bool Equals(APIKeyBase input)
         {
             if (input == null)
+            {
                 return false;
+            }
 
             return
                 (
-                    this.RetCode == input.RetCode ||
-                    (this.RetCode != null &&
-                    this.RetCode.Equals(input.RetCode))
+                    RetCode == input.RetCode ||
+                    (RetCode != null &&
+                    RetCode.Equals(input.RetCode))
                 ) &&
                 (
-                    this.RetMsg == input.RetMsg ||
-                    (this.RetMsg != null &&
-                    this.RetMsg.Equals(input.RetMsg))
+                    RetMsg == input.RetMsg ||
+                    (RetMsg != null &&
+                    RetMsg.Equals(input.RetMsg))
                 ) &&
                 (
-                    this.ExtCode == input.ExtCode ||
-                    (this.ExtCode != null &&
-                    this.ExtCode.Equals(input.ExtCode))
+                    ExtCode == input.ExtCode ||
+                    (ExtCode != null &&
+                    ExtCode.Equals(input.ExtCode))
                 ) &&
                 (
-                    this.ExtInfo == input.ExtInfo ||
-                    (this.ExtInfo != null &&
-                    this.ExtInfo.Equals(input.ExtInfo))
+                    ExtInfo == input.ExtInfo ||
+                    (ExtInfo != null &&
+                    ExtInfo.Equals(input.ExtInfo))
                 ) &&
                 (
-                    this.Result == input.Result ||
-                    this.Result != null &&
-                    this.Result.SequenceEqual(input.Result)
+                    Result == input.Result ||
+                    Result != null &&
+                    Result.SequenceEqual(input.Result)
                 ) &&
                 (
-                    this.TimeNow == input.TimeNow ||
-                    (this.TimeNow != null &&
-                    this.TimeNow.Equals(input.TimeNow))
+                    TimeNow == input.TimeNow ||
+                    (TimeNow != null &&
+                    TimeNow.Equals(input.TimeNow))
                 );
         }
 
@@ -175,18 +177,36 @@ namespace InternetWideWorld.CryptoLadder.Shared.Model
             unchecked // Overflow is fine, just wrap
             {
                 int hashCode = 41;
-                if (this.RetCode != null)
-                    hashCode = hashCode * 59 + this.RetCode.GetHashCode();
-                if (this.RetMsg != null)
-                    hashCode = hashCode * 59 + this.RetMsg.GetHashCode();
-                if (this.ExtCode != null)
-                    hashCode = hashCode * 59 + this.ExtCode.GetHashCode();
-                if (this.ExtInfo != null)
-                    hashCode = hashCode * 59 + this.ExtInfo.GetHashCode();
-                if (this.Result != null)
-                    hashCode = hashCode * 59 + this.Result.GetHashCode();
-                if (this.TimeNow != null)
-                    hashCode = hashCode * 59 + this.TimeNow.GetHashCode();
+                if (RetCode != null)
+                {
+                    hashCode = hashCode * 59 + RetCode.GetHashCode();
+                }
+
+                if (RetMsg != null)
+                {
+                    hashCode = hashCode * 59 + RetMsg.GetHashCode();
+                }
+
+                if (ExtCode != null)
+                {
+                    hashCode = hashCode * 59 + ExtCode.GetHashCode();
+                }
+
+                if (ExtInfo != null)
+                {
+                    hashCode = hashCode * 59 + ExtInfo.GetHashCode();
+                }
+
+                if (Result != null)
+                {
+                    hashCode = hashCode * 59 + Result.GetHashCode();
+                }
+
+                if (TimeNow != null)
+                {
+                    hashCode = hashCode * 59 + TimeNow.GetHashCode();
+                }
+
                 return hashCode;
             }
         }
@@ -196,7 +216,7 @@ namespace InternetWideWorld.CryptoLadder.Shared.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
             yield break;
         }

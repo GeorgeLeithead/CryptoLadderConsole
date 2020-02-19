@@ -6,14 +6,13 @@ namespace InternetWideWorld.CryptoLadder.Shared.BusinessLogic
         /// <summary>Validate that the read rungs is valid.</summary>
         public static bool IsRungsValid(string rungs)
         {
-            int result;
-            bool IsInt = int.TryParse(rungs, out result);
+            bool IsInt = int.TryParse(rungs, out int result);
             if (!IsInt)
             {
                 return false;
             }
 
-            return (result < 3 || result > 99) ? false : true;
+            return (result < 2 || result > 100) ? false : true;
         }
     }
 }

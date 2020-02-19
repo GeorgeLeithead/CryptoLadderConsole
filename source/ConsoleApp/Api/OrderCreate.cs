@@ -113,7 +113,7 @@ namespace InternetWideWorld.CryptoLadder.ConsoleApp.Api
                 formParams.Add("trailing_stop", Configuration.ApiClient.ParameterToString(trailingStop)); // form parameter
             }
 
-            IRestResponse localVarResponse = base.CallApi(path, Method.POST, queryParams, formParams, headerParams);
+            IRestResponse localVarResponse = CallApi(path, Method.POST, queryParams, formParams, headerParams);
             return ProcessRestResponce(localVarResponse).Data;
         }
 
@@ -170,7 +170,7 @@ namespace InternetWideWorld.CryptoLadder.ConsoleApp.Api
                 formParams.Add("trailing_stop", Configuration.ApiClient.ParameterToString(trailingStop)); // form parameter
             }
 
-            IRestResponse localVarResponse = await base.CallApiAsync(path, Method.POST, queryParams, formParams, headerParams);
+            IRestResponse localVarResponse = await CallApiAsync(path, Method.POST, queryParams, formParams, headerParams);
             return ProcessRestResponce(localVarResponse).Data;
         }
 

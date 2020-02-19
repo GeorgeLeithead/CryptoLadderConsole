@@ -1,15 +1,15 @@
+using InternetWideWorld.CryptoLadder.ConsoleApp.Api;
+using InternetWideWorld.CryptoLadder.ConsoleApp.BusinessLogic;
+using InternetWideWorld.CryptoLadder.ConsoleApp.Client;
+using InternetWideWorld.CryptoLadder.Shared.Definitions;
+using InternetWideWorld.CryptoLadder.Shared.Model;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using InternetWideWorld.CryptoLadder.ConsoleApp.Api;
-using InternetWideWorld.CryptoLadder.ConsoleApp.BusinessLogic;
-using InternetWideWorld.CryptoLadder.ConsoleApp.Client;
 using SharedBusinessLogic = InternetWideWorld.CryptoLadder.Shared.BusinessLogic;
-using InternetWideWorld.CryptoLadder.Shared.Definitions;
-using InternetWideWorld.CryptoLadder.Shared.Model;
-using Microsoft.Extensions.Logging;
 
 namespace InternetWideWorld.CryptoLadder.ConsoleApp
 {
@@ -24,7 +24,7 @@ namespace InternetWideWorld.CryptoLadder.ConsoleApp
             _logger = logger;
         }
 
-        /// <summary>Create a crypto ladder.</summary>
+        /// <summary>Create a CryptoLadder.</summary>
         public async Task CreateLadder(string apiKey, string apiSign)
         {
             _logger.LogInformation(0, "Starting creating CryptoLadder");

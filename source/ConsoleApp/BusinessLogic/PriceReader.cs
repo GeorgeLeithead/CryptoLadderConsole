@@ -23,7 +23,7 @@ namespace InternetWideWorld.CryptoLadder.ConsoleApp.BusinessLogic
                 }
 
                 return double.Parse(read, CultureInfo.InvariantCulture);
-            } while(true);
+            } while (true);
         }
     }
 }

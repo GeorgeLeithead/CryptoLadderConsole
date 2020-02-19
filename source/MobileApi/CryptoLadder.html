@@ -30,27 +30,69 @@
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script type="text/javascript">
         SubmitOrder = function () {
+            if ($('input[name=apikey]').val() == "")
+            {
+                alert("You must provide an API Key.");
+                return;
+            }
+            if ($('input[name=Sign]').val() == "")
+            {
+                alert("You must supply a Sign Key.");
+                return;
+            }
+            if ($.isNumeric($('input[name=OrderPrice]').val()) === false) {
+                alert("Start price must be between 0.0001 and 1000000.");
+                return;
+            }
+            if ($.isNumeric($('input[name=OrderQuantity]').val()) === false) {
+                alert("Quantity must be between 1 and 100000000.");
+                return;
+            }
+            PlaceSingleOrder();
+        };
+        SubmitLadder = function () {
+            if ($('input[name=apikey]').val() == "")
+            {
+                alert("You must provide an API Key.");
+                return;
+            }
+            if ($('input[name=Sign]').val() == "")
+            {
+                alert("You must supply a Sign Key.");
+                return;
+            }
             if ($.isNumeric($('input[name=StartPrice]').val()) === false) {
                 alert("Start price must be between 0.0001 and 1000000.");
                 return;
             }
-            if ($.isNumeric($('input[name=Quantity]').val()) === false) {
-                alert("Quantity must be between 1 and 100000000.");
+            if ($.isNumeric($('input[name=EndPrice]').val()) === false) {
+                alert("End price must be between 0.0001 and 1000000.");
                 return;
             }
-            if (parseInt($('input[name=Rungs]').val()) >= 2) {
-                PlaceLadderOrder();
-            } else {
-                PlaceSingleOrder();
+            if ($.isNumeric($('input[name=Rungs]').val()) === false) {
+                alert("Rungs must be between 2 and 100.");
+                return;
             }
-        };
+            if ($.isNumeric($('input[name=Quantity]').val()) === false) {
+                alert("Ladder quantity must be between 1 and 100000000.");
+                return;
+            }
+            PlaceLadderOrder();
+        }
         PlaceLadderOrder = function () {
             $("<div>Place Ladder- " + $('input[name=Side]').val() + " " + parseInt($('input[name=Quantity]').val()) + " " + $('select[name=Currency] option:selected').val() + " @ $" + parseFloat($('input[name=StartPrice]').val()) + " to " + parseFloat($('input[name=EndPrice]').val()) + " with " + parseInt($('input[name=Rungs]').val()) + " rungs</div>").appendTo("#message");
+            var MainNet = false;
+            if ($('input[name=Network]:checked').val() == "MainNet")
+            {
+                MainNet = true;
+            }
+
             var formData = {
+                "MainNet": MainNet,
                 "apikey": $('input[name=apikey]').val(),
                 "Sign": $('input[name=Sign]').val(),
                 "Currency": $('select[name=Currency] option:selected').val(),
-                "Side": $('input[name=Side]').val(),
+                "Side": $('input[name=Side]:checked').val(),
                 "StartPrice": parseFloat($('input[name=StartPrice]').val()),
                 "EndPrice": parseFloat($('input[name=EndPrice]').val()),
                 "Rungs": parseInt($('input[name=Rungs]').val()),
@@ -61,20 +103,30 @@
             PlaceOrder(formUrl, formData, orderForm.prop('method'));
         };
         PlaceSingleOrder = function () {
-            $("<div>Place Order- " + $('input[name=Side]').val() + " " + parseInt($('input[name=Quantity]').val()) + " " + $('select[name=Currency] option:selected').val() + " @ $" + parseFloat($('input[name=StartPrice]').val()) + "</div>").appendTo("#message");
+            $("<div>Place Order- " + $('input[name=OrderSide]:checked').val() + " " + parseInt($('input[name=OrderQuantity]').val()) + " " + $('select[name=OrderCurrency] option:selected').val() + " @ $" + parseFloat($('input[name=OrderPrice]').val()) + "</div>").appendTo("#message");
+            var MainNet = false;
+            if ($('input[name=Network]:checked').val() == "MainNet")
+            {
+                MainNet = true;
+            }
+
             var formData = {
+                "MainNet": MainNet,
                 "apikey": $('input[name=apikey]').val(),
                 "Sign": $('input[name=Sign]').val(),
-                "Currency": $('select[name=Currency] option:selected').val(),
-                "Side": $('input[name=Side]').val(),
-                "StartPrice": parseFloat($('input[name=StartPrice]').val()),
-                "Quantity": parseInt($('input[name=Quantity]').val())
+                "Currency": $('select[name=OrderCurrency] option:selected').val(),
+                "Side": $('input[name=OrderSide]:checked').val(),
+                "StartPrice": parseFloat($('input[name=OrderPrice]').val()),
+                "Quantity": parseInt($('input[name=OrderQuantity]').val())
             };
             var orderForm = $("#CryptoLadderForm");
             var formUrl = orderForm.prop('action') + "/Create";
             PlaceOrder(formUrl, formData, orderForm.prop('method'));
         };
         PlaceOrder = function (formUrl, formData, formType) {
+            console.log(formUrl);
+            console.log(JSON.stringify(formData));
+            console.log(formType);
             $.ajax({
                 url: formUrl,
                 type: formType,
@@ -83,7 +135,6 @@
                 contentType: "application/json",
                 success: function (jsonResult) {
                     if (Array.isArray(jsonResult)) {
-                        console.log("Result is array");
                         for (var i in jsonResult) {
                             console.log(JSON.stringify(jsonResult[i]));
                             if (jsonResult[i].ret_code !== 0) {
@@ -93,7 +144,6 @@
                             }
                         }
                     } else {
-                        console.log("Result is NOT array");
                         console.log(JSON.stringify(jsonResult));
                         if (jsonResult.ret_code !== 0) {
                             $("<div>ERROR- " + jsonResult.ret_code + ": " + jsonResult.ret_msg + "<br /><br /></div>").appendTo("#message");
@@ -109,6 +159,12 @@
             });
         };
         $.when($.ready).then(function () {
+            /* Popup */
+            ShowPopup = function (elmnt) {
+                var childPopup = $(elmnt).find(".popuptext");
+                childPopup.toggleClass("show");
+            }
+
             /* Slider */
             var rungsSlider = document.getElementById("Rungs");
             var rungsSelected = document.getElementById("RungsSelected");
@@ -196,6 +252,27 @@
                 }
             }
 
+            ShowTab = function (evnt, tabName) {
+                // Declare all variables
+                var i, tabcontent, tablinks;
+
+                // Get all elements with class="tabcontent" and hide them
+                tabcontent = document.getElementsByClassName("tabcontent");
+                for (i = 0; i < tabcontent.length; i++) {
+                    tabcontent[i].classList.remove("activetab");
+                }
+
+                // Get all the elements with class="tabLinks" andmake them not active
+                tablinks = document.getElementsByClassName("tabLinks");
+                for (i = 0; i < tablinks.length; i++) {
+                    tablinks[i].classList.remove("active");
+                }
+
+                // Show the current tab and set the button to active
+                document.getElementById(tabName).classList.add("activetab");
+                evnt.currentTarget.classList.add("active");
+            }
+
             /* If the user clicks anywhere outside the select box, then close all select boxes: */
             document.addEventListener("click", closeAllSelect);
         });
@@ -204,15 +281,41 @@
 
 <body lang="en-us" dir="ltr">
     <h1>CryptoLadder</h1>
-    <div class="container">
-        <form id="CryptoLadderForm" method="POST" xaction="https://cryptoladdermobileapi.azurewebsites.net/Order"
-            action="https://localhost:5001/Order" enctype="application/json">
+    <!-- Tab links-->
+    <div class="tab">
+        <button class="tabLinks active" onclick="ShowTab(event, 'Network')">Network</button>
+        <button class="tabLinks" onclick="ShowTab(event, 'Order')">Order</button>
+        <button class="tabLinks" onclick="ShowTab(event, 'Ladder')">Ladder</button>
+    </div>
+    <!-- Tab Content -->
+    <form id="CryptoLadderForm" method="POST" action="https://cryptoladdermobileapi.azurewebsites.net/Order"
+        debugaction="https://localhost:5001/Order" enctype="application/json">
+        <div id="Network" class="tabcontent activetab">
+            <div class="row">
+                <div class="col-25">
+                    <label for="Network">Net</label>
+                    <span class="popup" onclick="ShowPopup(this)">(?)
+                        <span class="popuptext">MainNet = LIVE trading on ByBit and your investments may be at (your
+                            own) risk! TestNet = test network and can be used without risk.</span>
+                    </span>
+                </div>
+                <div class="col-75">
+                    <label class="radioButton">TestNet
+                        <input type="radio" checked="checked" name="Network" value="TestNet" />
+                        <span class="checkmark"></span>
+                    </label>
+                    <label class="radioButton">MainNet
+                        <input type="radio" name="Network" value="MainNet" />
+                        <span class="checkmark"></span>
+                    </label>
+                </div>
+            </div>
             <div class="row">
                 <div class="col-25">
                     <label for="apikey">API Key</label>
                 </div>
                 <div class="col-75">
-                    <input id="apikey" name="apikey" type="text" spellcheck="false" value="" />
+                    <input id="apikey" name="apikey" type="text" spellcheck="false" value="" required="required" />
                 </div>
             </div>
             <div class="row">
@@ -220,16 +323,79 @@
                     <label for="Sign">Sign</label>
                 </div>
                 <div class="col-75">
-                    <input name="Sign" id="Sign" type="password" spellcheck="false" value="" />
-                    <input type="checkbox" onclick="ShowSign()" />Show
+                    <input name="Sign" id="Sign" type="password" spellcheck="false" value="" required="required" />
+                    <input name="SignShow" id="SignShow" type="checkbox" onclick="ShowSign()" />Show
                 </div>
             </div>
+        </div>
+        <div id="Order" class="tabcontent">
+            <div class="row">
+                <div class="col-25">
+                    <label for="OrderCurrency">Currency</label>
+                </div>
+                <div class="col-75 custom-select">
+                    <select id="OrderCurrency" name="OrderCurrency" multiple="false" required="required">
+                        <option value="">Currency</option>
+                        <option value="BTC">BTC</option>
+                        <option value="ETH">ETH</option>
+                        <option value="EOS">EOS</option>
+                        <option value="XRP" selected="selected">XRP</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label for="OrderSide">Side</label>
+                    <span class="popup" onclick="ShowPopup(this)">(?)
+                        <span class="popuptext">Buy = place a LONG order, Sell = place a SHORT order.</span>
+                    </span>
+                </div>
+                <div class="col-75">
+                    <label class="radioButton">Buy
+                        <input type="radio" checked="checked" name="OrderSide" value="Buy" />
+                        <span class="checkmark"></span>
+                    </label>
+                    <label class="radioButton">Sell
+                        <input type="radio" name="OrderSide" value="Sell" />
+                        <span class="checkmark"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label for="OrderPrice">Price (USD)</label>
+                    <span class="popup" onclick="ShowPopup(this)">(?)
+                        <span class="popuptext">Between 0.0001 and 1000000.</span>
+                    </span>
+                </div>
+                <div class="col-75">
+                    <input type="number" id="OrderPrice" name="OrderPrice" min="0.0001" max="1000000" step="0.0001"
+                        required="required" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label for="OrderQuantity">Quantity</label>
+                    <span class="popup" onclick="ShowPopup(this)">(?)
+                        <span class="popuptext">Between 1 and 100000000.</span>
+                    </span>
+                </div>
+                <div class="col-75">
+                    <input type="number" id="OrderQuantity" name="OrderQuantity" min="1" max="100000000" step="1"
+                        required="required" />
+                </div>
+            </div>
+            <div class="row">
+                <button class="makeOrder" type="button" onclick="SubmitOrder();">Order</button>
+            </div>
+        </div>
+        <div id="Ladder" class="tabcontent">
             <div class="row">
                 <div class="col-25">
                     <label for="Currency">Currency</label>
                 </div>
                 <div class="col-75 custom-select">
-                    <select id="Currency" name="Currency" multiple="false">
+                    <select id="Currency" name="Currency" multiple="false" required="required">
                         <option value="">Currency</option>
                         <option value="BTC">BTC</option>
                         <option value="ETH">ETH</option>
@@ -241,13 +407,16 @@
             <div class="row">
                 <div class="col-25">
                     <label for="Side">Side</label>
+                    <span class="popup" onclick="ShowPopup(this)">(?)
+                        <span class="popuptext">Buy = place a LONG order, Sell = place a SHORT order.</span>
+                    </span>
                 </div>
                 <div class="col-75">
-                    <label class="radioButton" title="Place a LONG order">Buy
+                    <label class="radioButton">Buy
                         <input type="radio" checked="checked" name="Side" value="Buy" />
                         <span class="checkmark"></span>
                     </label>
-                    <label class="radioButton" title="Place a SHORT order">Sell
+                    <label class="radioButton">Sell
                         <input type="radio" name="Side" value="Sell" />
                         <span class="checkmark"></span>
                     </label>
@@ -256,72 +425,66 @@
             <div class="row">
                 <div class="col-25">
                     <label for="StartPrice">Start Price (USD)</label>
+                    <span class="popup" onclick="ShowPopup(this)">(?)
+                        <span class="popuptext">Between 0.0001 and 1000000.</span>
+                    </span>
                 </div>
                 <div class="col-75">
                     <input type="number" id="StartPrice" name="StartPrice" min="0.0001" max="1000000" step="0.0001"
-                        title="Between 0.0001 and 1000000" />
+                        required="required" />
                 </div>
             </div>
             <div class="row">
                 <div class="col-25">
                     <label for="EndPrice">End Price (USD)</label>
+                    <span class="popup" onclick="ShowPopup(this)">(?)
+                        <span class="popuptext">Between 0.0001 and 1000000.</span>
+                    </span>
                 </div>
                 <div class="col-75">
-                    <input type="number" id="EndPrice" name="EndPrice" min="0.0001" max="1000000" step="0.0001"
-                        title="Between 0.0001 and 1000000" />
+                    <input type="number" id="EndPrice" name="EndPrice" min="0.0001" max="1000000" step="0.0001" />
                 </div>
             </div>
             <div class="row">
                 <div class="col-25">
-                    <label for="Rungs">Ladder Rungs (<span id="RungsSelected">1</span>)</label>
+                    <label for="Rungs">Ladder Rungs (<span id="RungsSelected">2</span>)</label>
+                    <span class="popup" onclick="ShowPopup(this)">(?)
+                        <span class="popuptext">Number of linear orders for the ladder.</span>
+                    </span>
                 </div>
                 <div class="col-75 slidecontainer">
-                    <input type="range" min="1" max="99" value="1" id="Rungs" name="Rungs" class="slider"
-                        title="Ladder order when 2 or more" />
+                    <input type="range" min="2" max="100" value="2" id="Rungs" name="Rungs" class="slider"
+                        required="required" />
                 </div>
             </div>
             <div class="row">
                 <div class="col-25">
                     <label for="Quantity">Quantity</label>
+                    <span class="popup" onclick="ShowPopup(this)">(?)
+                        <span class="popuptext">Between 1 and 100000000.</span>
+                    </span>
                 </div>
                 <div class="col-75">
                     <input type="number" id="Quantity" name="Quantity" min="1" max="100000000" step="1"
-                        title="Between 1and 100000000" />
+                        required="required" />
                 </div>
             </div>
             <div class="row">
-                <button type="button" onclick="SubmitOrder();">Order</button>
+                <button class="makeOrder" type="button" onclick="SubmitLadder();">Ladder</button>
             </div>
-        </form>
-    </div>
+        </div>
+    </form>
     <p id="message"></p>
     <style>
-        /* Tool-tip titles */
-        [title]:hover:after {
-            content: attr(title);
-        }
-
-        [title]>* {
-            user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            -webkit-user-select: none;
-        }
-
-        [title]:hover>* {
-            user-select: auto;
-            -moz-user-select: auto;
-            -ms-user-select: auto;
-            -webkit-user-select: auto;
-        }
-
         /* Style inputs, select elements and textareas */
         input[type=text],
+        input[type=password],
+        input[type=number],
         select,
         textarea {
             width: 100%;
             padding: 12px;
-            border: 1px solid #ccc;
+            border: 1px solid DodgerBlue;
             border-radius: 4px;
             box-sizing: border-box;
             resize: vertical;
@@ -331,17 +494,6 @@
         label {
             padding: 12px 12px 12px 0;
             display: inline-block;
-        }
-
-        /* Style the submit button */
-        button {
-            background-color: DodgerBlue;
-            color: white;
-            padding: 12px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            float: right;
         }
 
         /* Style the container */
@@ -572,6 +724,141 @@
             height: 8px;
             border-radius: 50%;
             background: white;
+        }
+
+        /* Popup */
+        /* Popup container - can be anything you want */
+        .popup {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        /* The actual popup */
+        .popup .popuptext {
+            visibility: hidden;
+            width: 220px;
+            background-color: #555;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 8px 0;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -80px;
+        }
+
+        /* Popup arrow */
+        .popup .popuptext::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #555 transparent transparent transparent;
+        }
+
+        /* Toggle this class - hide and show the popup */
+        .popup .show {
+            visibility: visible;
+            -webkit-animation: fadeIn 1s;
+            animation: fadeIn 1s;
+        }
+
+        /* Add animation (fade in the popup) */
+        @-webkit-keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Style the submit button */
+        button.makeOrder {
+            background-color: DodgerBlue;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            float: right;
+            margin-top: 20px;
+        }
+
+        /* Labels */
+        .col-25 label:first-child {
+            font-weight: bold;
+        }
+
+        /* Sign */
+        #Sign {
+            float: left;
+        }
+
+        #SignShow {
+            float: left;
+        }
+
+        /* Tabs */
+        .tab {
+            overflow: hidden;
+            border: 1px solid DodgerBlue;
+            background-color: #f1f1f1;
+        }
+
+        /* Style the buttons that are used to open the tab content */
+        .tab button {
+            background-color: inherit;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+        }
+
+        /* Change background color of buttons on hover */
+        .tab button:hover {
+            background-color: #ddd;
+        }
+
+        /* Create an active/current tablink class */
+        .tab button.active {
+            background-color: DodgerBlue;
+            color: white;
+        }
+
+        /* Style the tab content */
+        .tabcontent {
+            display: none;
+            padding: 6px 12px;
+            border: 1px solid DodgerBlue;
+            border-top: none;
+        }
+
+        .tabcontent.activetab {
+            display: block;
         }
     </style>
 </body>

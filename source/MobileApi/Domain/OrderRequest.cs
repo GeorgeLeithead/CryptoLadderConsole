@@ -1,9 +1,9 @@
 
+using InternetWideWorld.CryptoLadder.Shared.Definitions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using InternetWideWorld.CryptoLadder.Shared.Definitions;
 
 namespace InternetWideWorld.CryptoLadder.MobileApi.Domain
 {
@@ -21,11 +21,7 @@ namespace InternetWideWorld.CryptoLadder.MobileApi.Domain
             set
             {
                 currency = value;
-                try
-                {
-                    Symbol = Enum.GetValues(typeof(SymbolEnum)).Cast<SymbolEnum>().First(a => a.ToString().StartsWith(value.ToUpperInvariant()));
-                }
-                catch { }
+                Symbol = Enum.GetValues(typeof(SymbolEnum)).Cast<SymbolEnum>().First(a => a.ToString().StartsWith(value.ToUpperInvariant(), StringComparison.OrdinalIgnoreCase));
             }
         }
 
@@ -41,11 +37,7 @@ namespace InternetWideWorld.CryptoLadder.MobileApi.Domain
             set
             {
                 side = value;
-                try
-                {
-                    OrderSide = Enum.GetValues(typeof(SideEnum)).Cast<SideEnum>().First(s => s.ToString().ToUpperInvariant() == Side.ToUpperInvariant());
-                }
-                catch { }
+                OrderSide = Enum.GetValues(typeof(SideEnum)).Cast<SideEnum>().First(s => s.ToString().ToUpperInvariant() == Side.ToUpperInvariant());
             }
         }
 

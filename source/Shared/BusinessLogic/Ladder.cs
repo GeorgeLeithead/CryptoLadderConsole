@@ -17,8 +17,7 @@ namespace InternetWideWorld.CryptoLadder.Shared.BusinessLogic
         /// <returns>The price gap between ladder rungs.</returns>
         public static double Calculate(double startPrice, double endPrice, int rungs)
         {
-            double gaps = (startPrice - endPrice) / (rungs - 1); // Must remove the last in order to match to start AND end
-            return gaps;
+            return (startPrice - endPrice) / (rungs - 1); // Must remove the last in order to match to start AND end
         }
 
         /// <summary>Linear gradient ladder.</summary>
