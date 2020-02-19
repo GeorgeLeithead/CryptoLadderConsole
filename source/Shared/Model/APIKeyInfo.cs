@@ -1,16 +1,16 @@
 using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Text.Json;
-using System.Collections.Generic;
-using System.Runtime.Serialization;
-using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
 namespace InternetWideWorld.CryptoLadder.Shared.Model
 {
     /// <summary>
-    /// Get bybit server time.
+    /// Get ByBit server time.
     /// </summary>
     [DataContract]
     public partial class APIKeyInfo : IEquatable<APIKeyInfo>, IValidatableObject
@@ -19,27 +19,27 @@ namespace InternetWideWorld.CryptoLadder.Shared.Model
         /// Initializes a new instance of the <see cref="APIKeyInfo" /> class.
         /// </summary>
         public APIKeyInfo()
-        {}
+        { }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="APIKeyInfo" /> class.
         /// </summary>
         /// <param name="apiKey">apiKey.</param>
         /// <param name="userId">userId.</param>
-        /// <param name="ips">ips.</param>
+        /// <param name="ips">IPS.</param>
         /// <param name="note">note.</param>
         /// <param name="permissions">permissions.</param>
         /// <param name="createdAt">createdAt.</param>
         /// <param name="readOnly">readOnly.</param>
-        public APIKeyInfo(string apiKey = default(string), decimal? userId = default(decimal?), List<string> ips = default(List<string>), string note = default(string), List<string> permissions = default(List<string>), string createdAt = default(string), bool? readOnly = default(bool?))
+        public APIKeyInfo(string apiKey = default, decimal? userId = default, List<string> ips = default, string note = default, List<string> permissions = default, string createdAt = default, bool? readOnly = default)
         {
-            this.ApiKey = apiKey;
-            this.UserId = userId;
-            this.Ips = ips;
-            this.Note = note;
-            this.Permissions = permissions;
-            this.CreatedAt = createdAt;
-            this.ReadOnly = readOnly;
+            ApiKey = apiKey;
+            UserId = userId;
+            Ips = ips;
+            Note = note;
+            Permissions = permissions;
+            CreatedAt = createdAt;
+            ReadOnly = readOnly;
         }
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace InternetWideWorld.CryptoLadder.Shared.Model
         public decimal? UserId { get; set; }
 
         /// <summary>
-        /// Gets or Sets Ips
+        /// Gets or Sets IPS
         /// </summary>
         [JsonPropertyName("ips")]
         [DataMember(Name = "ips", EmitDefaultValue = false)]
@@ -97,11 +97,11 @@ namespace InternetWideWorld.CryptoLadder.Shared.Model
         /// <returns>String presentation of the object</returns>
         public override string ToString()
         {
-            var sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
             sb.Append("class APIKeyInfo {\n");
             sb.Append("  ApiKey: ").Append(ApiKey).Append("\n");
             sb.Append("  UserId: ").Append(UserId).Append("\n");
-            sb.Append("  Ips: ").Append(Ips).Append("\n");
+            sb.Append("  IPS: ").Append(Ips).Append("\n");
             sb.Append("  Note: ").Append(Note).Append("\n");
             sb.Append("  Permissions: ").Append(Permissions).Append("\n");
             sb.Append("  CreatedAt: ").Append(CreatedAt).Append("\n");
@@ -130,7 +130,7 @@ namespace InternetWideWorld.CryptoLadder.Shared.Model
         /// <returns>Boolean</returns>
         public override bool Equals(object input)
         {
-            return this.Equals(input as APIKeyInfo);
+            return Equals(input as APIKeyInfo);
         }
 
         /// <summary>
@@ -141,43 +141,45 @@ namespace InternetWideWorld.CryptoLadder.Shared.Model
         public bool Equals(APIKeyInfo input)
         {
             if (input == null)
+            {
                 return false;
+            }
 
             return
                 (
-                    this.ApiKey == input.ApiKey ||
-                    (this.ApiKey != null &&
-                    this.ApiKey.Equals(input.ApiKey))
+                    ApiKey == input.ApiKey ||
+                    (ApiKey != null &&
+                    ApiKey.Equals(input.ApiKey))
                 ) &&
                 (
-                    this.UserId == input.UserId ||
-                    (this.UserId != null &&
-                    this.UserId.Equals(input.UserId))
+                    UserId == input.UserId ||
+                    (UserId != null &&
+                    UserId.Equals(input.UserId))
                 ) &&
                 (
-                    this.Ips == input.Ips ||
-                    this.Ips != null &&
-                    this.Ips.SequenceEqual(input.Ips)
+                    Ips == input.Ips ||
+                    Ips != null &&
+                    Ips.SequenceEqual(input.Ips)
                 ) &&
                 (
-                    this.Note == input.Note ||
-                    (this.Note != null &&
-                    this.Note.Equals(input.Note))
+                    Note == input.Note ||
+                    (Note != null &&
+                    Note.Equals(input.Note))
                 ) &&
                 (
-                    this.Permissions == input.Permissions ||
-                    this.Permissions != null &&
-                    this.Permissions.SequenceEqual(input.Permissions)
+                    Permissions == input.Permissions ||
+                    Permissions != null &&
+                    Permissions.SequenceEqual(input.Permissions)
                 ) &&
                 (
-                    this.CreatedAt == input.CreatedAt ||
-                    (this.CreatedAt != null &&
-                    this.CreatedAt.Equals(input.CreatedAt))
+                    CreatedAt == input.CreatedAt ||
+                    (CreatedAt != null &&
+                    CreatedAt.Equals(input.CreatedAt))
                 ) &&
                 (
-                    this.ReadOnly == input.ReadOnly ||
-                    (this.ReadOnly != null &&
-                    this.ReadOnly.Equals(input.ReadOnly))
+                    ReadOnly == input.ReadOnly ||
+                    (ReadOnly != null &&
+                    ReadOnly.Equals(input.ReadOnly))
                 );
         }
 
@@ -190,20 +192,41 @@ namespace InternetWideWorld.CryptoLadder.Shared.Model
             unchecked // Overflow is fine, just wrap
             {
                 int hashCode = 41;
-                if (this.ApiKey != null)
-                    hashCode = hashCode * 59 + this.ApiKey.GetHashCode();
-                if (this.UserId != null)
-                    hashCode = hashCode * 59 + this.UserId.GetHashCode();
-                if (this.Ips != null)
-                    hashCode = hashCode * 59 + this.Ips.GetHashCode();
-                if (this.Note != null)
-                    hashCode = hashCode * 59 + this.Note.GetHashCode();
-                if (this.Permissions != null)
-                    hashCode = hashCode * 59 + this.Permissions.GetHashCode();
-                if (this.CreatedAt != null)
-                    hashCode = hashCode * 59 + this.CreatedAt.GetHashCode();
-                if (this.ReadOnly != null)
-                    hashCode = hashCode * 59 + this.ReadOnly.GetHashCode();
+                if (ApiKey != null)
+                {
+                    hashCode = hashCode * 59 + ApiKey.GetHashCode();
+                }
+
+                if (UserId != null)
+                {
+                    hashCode = hashCode * 59 + UserId.GetHashCode();
+                }
+
+                if (Ips != null)
+                {
+                    hashCode = hashCode * 59 + Ips.GetHashCode();
+                }
+
+                if (Note != null)
+                {
+                    hashCode = hashCode * 59 + Note.GetHashCode();
+                }
+
+                if (Permissions != null)
+                {
+                    hashCode = hashCode * 59 + Permissions.GetHashCode();
+                }
+
+                if (CreatedAt != null)
+                {
+                    hashCode = hashCode * 59 + CreatedAt.GetHashCode();
+                }
+
+                if (ReadOnly != null)
+                {
+                    hashCode = hashCode * 59 + ReadOnly.GetHashCode();
+                }
+
                 return hashCode;
             }
         }
@@ -213,7 +236,7 @@ namespace InternetWideWorld.CryptoLadder.Shared.Model
         /// </summary>
         /// <param name="validationContext">Validation context</param>
         /// <returns>Validation Result</returns>
-        IEnumerable<System.ComponentModel.DataAnnotations.ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
         {
             yield break;
         }

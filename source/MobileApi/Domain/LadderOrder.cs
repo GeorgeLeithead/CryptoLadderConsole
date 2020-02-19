@@ -1,8 +1,8 @@
+using InternetWideWorld.CryptoLadder.Shared.Definitions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using InternetWideWorld.CryptoLadder.Shared.Definitions;
 
 namespace InternetWideWorld.CryptoLadder.MobileApi.Domain
 {
@@ -10,7 +10,7 @@ namespace InternetWideWorld.CryptoLadder.MobileApi.Domain
     {
         /// <summary>Number of ladder rungs.</summary>
         [Required]
-        [Range(2, 99, ErrorMessage = "{0} must be between {2} and {1}.")]
+        [Range(2, 100, ErrorMessage = "{0} must be between {2} and {1}.")]
         public int Rungs { get; set; }
 
         /// <summary>Ladder ending price.</summary>
@@ -21,10 +21,11 @@ namespace InternetWideWorld.CryptoLadder.MobileApi.Domain
         /// <summary>Custom validation of the ladder order object.</summary>
         public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            foreach(ValidationResult result in base.Validate(validationContext).ToList())
+            foreach (ValidationResult result in base.Validate(validationContext).ToList())
             {
                 yield return result;
             }
+
 
             if (StartPrice == EndPrice)
             {

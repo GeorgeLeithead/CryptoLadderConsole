@@ -34,7 +34,7 @@ namespace InternetWideWorld.CryptoLadder.ConsoleApp.Client
         /// <summary>
         /// Gets the date time format.
         /// </summary>
-        /// <value>Date time foramt.</value>
+        /// <value>Date time format.</value>
         string DateTimeFormat { get; }
 
         /// <summary>
@@ -62,9 +62,9 @@ namespace InternetWideWorld.CryptoLadder.ConsoleApp.Client
         string UserAgent { get; }
 
         /// <summary>
-        /// Gets the username.
+        /// Gets the UserName.
         /// </summary>
-        /// <value>Username.</value>
+        /// <value>UserName.</value>
         string Username { get; }
 
         /// <summary>

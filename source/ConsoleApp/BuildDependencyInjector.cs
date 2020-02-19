@@ -1,8 +1,8 @@
-using System;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NLog.Extensions.Logging;
+using System;
 
 namespace InternetWideWorld.CryptoLadder.ConsoleApp
 {
@@ -15,9 +15,9 @@ namespace InternetWideWorld.CryptoLadder.ConsoleApp
             .AddTransient<Startup>()
             .AddLogging(loggingBuilder =>
             {
-            // configure NLog logging
-            loggingBuilder.ClearProviders();
-                loggingBuilder.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Trace);
+                // configure NLog logging
+                loggingBuilder.ClearProviders();
+                loggingBuilder.SetMinimumLevel(LogLevel.Trace);
                 loggingBuilder.AddNLog(config);
             })
             .BuildServiceProvider();

@@ -1,5 +1,5 @@
-using System;
 using RestSharp;
+using System;
 
 namespace InternetWideWorld.CryptoLadder.ConsoleApp.Client
 {

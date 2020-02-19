@@ -274,7 +274,7 @@ namespace InternetWideWorld.CryptoLadder.ConsoleApp.Client
 
             if (type.Name.StartsWith("System.Nullable`1[[System.DateTime")) // return a date time object
             {
-                return DateTime.Parse(response.Content, null, System.Globalization.DateTimeStyles.RoundtripKind);
+                return DateTime.Parse(response.Content, null, DateTimeStyles.RoundtripKind);
             }
 
             if (type == typeof(string) || type.Name.StartsWith("System.Nullable")) // return primitive type
@@ -296,7 +296,7 @@ namespace InternetWideWorld.CryptoLadder.ConsoleApp.Client
         /// <summary>Check if the given MIME is a JSON MIME.
         ///JSON MIME examples:
         ///    application/json
-        ///    application/json; charset=UTF8
+        ///    application/json; CharSet=UTF8
         ///    APPLICATION/JSON
         ///    application/vnd.company+json
         /// </summary>
@@ -322,12 +322,11 @@ namespace InternetWideWorld.CryptoLadder.ConsoleApp.Client
                 return "application/json";
             }
 
-            foreach (string contentType in contentTypes)
+            foreach (string contentType in from string contentType in contentTypes
+                                        where IsJsonMime(contentType.ToLower())
+                                        select contentType)
             {
-                if (IsJsonMime(contentType.ToLower()))
-                {
-                    return contentType;
-                }
+                return contentType;
             }
 
             return contentTypes[0]; // use the first content type specified in 'consumes'
@@ -338,17 +337,9 @@ namespace InternetWideWorld.CryptoLadder.ConsoleApp.Client
         /// <returns>The Accept header to use.</returns>
         public string SelectHeaderAccept(string[] accepts)
         {
-            if (accepts.Length == 0)
-            {
-                return null;
-            }
-
-            if (accepts.Contains("application/json", StringComparer.OrdinalIgnoreCase))
-            {
-                return "application/json";
-            }
-
-            return string.Join(",", accepts);
+            return accepts.Length == 0
+                ? null
+                : accepts.Contains("application/json", StringComparer.OrdinalIgnoreCase) ? "application/json" : string.Join(",", accepts);
         }
 
         /// <summary>Dynamically cast the object into target type.</summary>
@@ -366,15 +357,7 @@ namespace InternetWideWorld.CryptoLadder.ConsoleApp.Client
         public static string SanitizeFilename(string filename)
         {
             Match match = Regex.Match(filename, @".*[/\\](.*)$");
-
-            if (match.Success)
-            {
-                return match.Groups[1].Value;
-            }
-            else
-            {
-                return filename;
-            }
+            return match.Success ? match.Groups[1].Value : filename;
         }
 
         /// <summary>Convert parameters to key/value pairs. Use collectionFormat to properly format lists and collections.</summary>

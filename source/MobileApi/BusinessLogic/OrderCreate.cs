@@ -1,7 +1,7 @@
-using System;
-using System.Globalization;
 using InternetWideWorld.CryptoLadder.MobileApi.Domain;
 using InternetWideWorld.CryptoLadder.Shared.Definitions;
+using System;
+using System.Globalization;
 
 namespace InternetWideWorld.CryptoLadder.MobileApi.BusinessLogic
 {
@@ -9,6 +9,11 @@ namespace InternetWideWorld.CryptoLadder.MobileApi.BusinessLogic
     {
         public static string GenerateFormParameters(OrderRequest orderRequest)
         {
+            if (null == orderRequest)
+            {
+                return string.Empty;
+            }
+
             string formString = string.Format(CultureInfo.InvariantCulture, "{0}={1}", "order_type", OrderTypeEnum.Limit);
             formString += string.Format(CultureInfo.InvariantCulture, "&{0}={1}", "qty", orderRequest.Quantity);
             formString += string.Format(CultureInfo.InvariantCulture, "&{0}={1}", "side", orderRequest.Side);
@@ -19,6 +24,11 @@ namespace InternetWideWorld.CryptoLadder.MobileApi.BusinessLogic
 
         public static string GenerateQueryParameters(OrderRequest orderRequest)
         {
+            if (null == orderRequest)
+            {
+                return string.Empty;
+            }
+
             string signingString = string.Format(CultureInfo.InvariantCulture, "{0}={1}", "api_key", orderRequest.ApiKey);
             signingString += string.Format(CultureInfo.InvariantCulture, "&{0}={1}", "order_type", OrderTypeEnum.Limit);
             signingString += string.Format(CultureInfo.InvariantCulture, "&{0}={1}", "price", orderRequest.StartPrice);
@@ -26,11 +36,11 @@ namespace InternetWideWorld.CryptoLadder.MobileApi.BusinessLogic
             signingString += string.Format(CultureInfo.InvariantCulture, "&{0}={1}", "side", orderRequest.Side);
             signingString += string.Format(CultureInfo.InvariantCulture, "&{0}={1}", "symbol", orderRequest.Symbol);
             signingString += string.Format(CultureInfo.InvariantCulture, "&{0}={1}", "time_in_force", TimeInForceEnum.GoodTillCancel);
-            string timeStamp = new DateTimeOffset(DateTime.UtcNow).ToUnixTimeMilliseconds().ToString();
+            string timeStamp = new DateTimeOffset(DateTime.UtcNow).ToUnixTimeMilliseconds().ToString(CultureInfo.InvariantCulture);
             signingString += string.Format(CultureInfo.InvariantCulture, "&{0}={1}", "timestamp", timeStamp);
 
             string queryParameter = string.Format(CultureInfo.InvariantCulture, "?api_key={0}", Uri.EscapeDataString(orderRequest.ApiKey));
-            queryParameter += string.Format(CultureInfo.InvariantCulture, "&price={0}", Uri.EscapeDataString(orderRequest.StartPrice.ToString()));
+            queryParameter += string.Format(CultureInfo.InvariantCulture, "&price={0}", Uri.EscapeDataString(orderRequest.StartPrice.ToString(CultureInfo.InvariantCulture)));
             queryParameter += string.Format(CultureInfo.InvariantCulture, "&timestamp={0}", Uri.EscapeDataString(timeStamp));
             queryParameter += string.Format(CultureInfo.InvariantCulture, "&sign={0}", Shared.BusinessLogic.Signature.Create(orderRequest.Sign, signingString));
             return queryParameter;

@@ -1,11 +1,9 @@
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Threading.Tasks;
 using InternetWideWorld.CryptoLadder.MobileApi.Client;
 using InternetWideWorld.CryptoLadder.MobileApi.Domain;
 using InternetWideWorld.CryptoLadder.Shared.Model;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace InternetWideWorld.CryptoLadder.MobileApi.Controllers
 {
@@ -13,19 +11,11 @@ namespace InternetWideWorld.CryptoLadder.MobileApi.Controllers
     [ApiController]
     public class OrderController : ControllerBase
     {
-        /// <summary>Logging API</summary>
-        private readonly ILogger log;
-
-        // <summary>Collection pool for Web services</summary>
-        private readonly IHttpClientFactory clientFactory;
-
         private readonly ByBitService ByBitService;
 
-        public OrderController(IHttpClientFactory factory, ILogger<OrderController> logger, ByBitService bybitService)
+        public OrderController(ByBitService bybitService)
         {
-            this.log = logger;
-            this.clientFactory = factory;
-            this.ByBitService = bybitService;
+            ByBitService = bybitService;
         }
 
         /// <summary>Create an order</summary>
@@ -33,7 +23,7 @@ namespace InternetWideWorld.CryptoLadder.MobileApi.Controllers
         [Produces("application/json")]
         public async Task<ActionResult<OrderResBase>> CreateOrder(OrderRequest order)
         {
-            return await this.ByBitService.PlaceOrder(order);
+            return await ByBitService.PlaceOrder(order).ConfigureAwait(false);
         }
 
         /// <summary>Create a laddered order.</summary>
@@ -41,7 +31,7 @@ namespace InternetWideWorld.CryptoLadder.MobileApi.Controllers
         [Produces("application/json")]
         public async Task<ActionResult<List<OrderResBase>>> CreateLadder(LadderOrder order)
         {
-            return await this.ByBitService.PlaceOrder(order);
+            return await ByBitService.PlaceOrder(order).ConfigureAwait(false);
         }
     }
 }

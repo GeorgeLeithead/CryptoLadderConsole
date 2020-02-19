@@ -1,7 +1,7 @@
-using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
-using SharedBusinessLogic = InternetWideWorld.CryptoLadder.Shared.BusinessLogic;
 using InternetWideWorld.CryptoLadder.Shared.Model;
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using SharedBusinessLogic = InternetWideWorld.CryptoLadder.Shared.BusinessLogic;
 
 namespace InternetWideWorld.CryptoLadder.MobileApi.Controllers
 {
@@ -11,7 +11,7 @@ namespace InternetWideWorld.CryptoLadder.MobileApi.Controllers
     {
         /// <summary>Get the generated ladder details.</summary>
         [HttpGet]
-        public List<LinearRungs> Get(double startPrice, double endPrice, int ladderRungs, int totalQuantity)
+        public static List<LinearRungs> Get(double startPrice, double endPrice, int ladderRungs, int totalQuantity)
         {
             return SharedBusinessLogic.Ladder.Linear(startPrice, endPrice, ladderRungs, totalQuantity);
         }

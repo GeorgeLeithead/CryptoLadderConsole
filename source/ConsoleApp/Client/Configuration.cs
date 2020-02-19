@@ -38,18 +38,14 @@ namespace InternetWideWorld.CryptoLadder.ConsoleApp.Client
         public static readonly ExceptionFactory DefaultExceptionFactory = (methodName, response) =>
         {
             int status = (int)response.StatusCode;
-            if (status >= 400)
-            {
-                return new ApiException(status,
+            return status >= 400
+                ? new ApiException(status,
                     string.Format("Error calling {0}: {1}", methodName, response.Content),
-                    response.Content);
-            }
-            if (status == 0)
-            {
-                return new ApiException(status,
-                    string.Format("Error calling {0}: {1}", methodName, response.ErrorMessage), response.ErrorMessage);
-            }
-            return null;
+                    response.Content)
+                : status == 0
+                ? new ApiException(status,
+                    string.Format("Error calling {0}: {1}", methodName, response.ErrorMessage), response.ErrorMessage)
+                : null;
         };
 
         /// <summary>Gets or sets the default Configuration.</summary>
@@ -74,7 +70,7 @@ namespace InternetWideWorld.CryptoLadder.ConsoleApp.Client
         /// <summary>Initializes a new instance of the <see cref="Configuration" /> class</summary>
         public Configuration()
         {
-            UserAgent = "SDKs csharp";
+            UserAgent = "SDKs CSharp";
             BasePath = "https://api-testnet.bybit.com";
             DefaultHeader = new ConcurrentDictionary<string, string>();
             ApiKey = new ConcurrentDictionary<string, string>();
@@ -252,10 +248,7 @@ namespace InternetWideWorld.CryptoLadder.ConsoleApp.Client
         public virtual IDictionary<string, string> ApiKeyPrefix
         {
             get => _apiKeyPrefix;
-            set
-            {
-                _apiKeyPrefix = value ?? throw new InvalidOperationException("ApiKeyPrefix collection may not be null.");
-            }
+            set => _apiKeyPrefix = value ?? throw new InvalidOperationException("ApiKeyPrefix collection may not be null.");
         }
 
         /// <summary>
@@ -265,10 +258,7 @@ namespace InternetWideWorld.CryptoLadder.ConsoleApp.Client
         public virtual IDictionary<string, string> ApiKey
         {
             get => _apiKey;
-            set
-            {
-                _apiKey = value ?? throw new InvalidOperationException("ApiKey collection may not be null.");
-            }
+            set => _apiKey = value ?? throw new InvalidOperationException("ApiKey collection may not be null.");
         }
 
         /// <summary>
