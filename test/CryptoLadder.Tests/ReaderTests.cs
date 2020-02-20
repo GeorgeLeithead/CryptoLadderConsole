@@ -73,8 +73,8 @@ namespace CryptoLadder.Tests
         }
 
         [Theory]
-        [InlineData("2")]
-        [InlineData("100")]
+        [InlineData("1")]
+        [InlineData("101")]
         [InlineData("A")]
         [InlineData("")]
         public void InvalidRungTests(string rungs)
