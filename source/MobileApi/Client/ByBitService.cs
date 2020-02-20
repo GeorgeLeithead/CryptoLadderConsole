@@ -77,6 +77,11 @@ namespace InternetWideWorld.CryptoLadder.MobileApi.Client
                 return results;
             }
 
+            HttpClient requestClient = ClientTestNet;
+            if (order.MainNet) {
+                requestClient = ClientMainNet;
+            }
+
             List<LinearRungs> linearLadder = SharedBusinessLogic.Ladder.Linear(order.StartPrice, order.EndPrice, order.Rungs, order.Quantity);
             foreach (var (requestMessage, postParams) in from LinearRungs linearRungs in linearLadder.Where(ll => ll.Quantity > 0)
                                                          let linearOrder = new OrderRequest
@@ -95,7 +100,7 @@ namespace InternetWideWorld.CryptoLadder.MobileApi.Client
                                                          select (requestMessage, postParams))
             {
                 requestMessage.Content = new StringContent(postParams, Encoding.UTF8, "application/x-www-form-urlencoded");
-                HttpResponseMessage response = await ClientMainNet.SendAsync(requestMessage).ConfigureAwait(false);
+                HttpResponseMessage response = await requestClient.SendAsync(requestMessage).ConfigureAwait(false);
                 response.EnsureSuccessStatusCode();
                 using (System.IO.Stream responseStream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false))
                 {
